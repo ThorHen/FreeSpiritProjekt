@@ -17,6 +17,7 @@ describe('Test suite for Login functionalities', () => {
 
     before(async () => {
         hashObj = await saltAndHashPassword(plaintextPassword);
+        console.log(hashObj.hashedPassword);
     })
 
     describe('Test suite for saltAndHashPassword', () => {
@@ -33,7 +34,7 @@ describe('Test suite for Login functionalities', () => {
         })
     })
 
-    describe('Test suite for login', () => {
+    describe('Test suite for comparePassword', () => {
 
         it('Assert that correct plaintext password returns true', async () => {
             const isCorrectPass = await comparePassword(plaintextPassword, hashObj.hashedPassword);
@@ -48,6 +49,20 @@ describe('Test suite for Login functionalities', () => {
         it('Assert that correct plaintext password, but wrong hash returns false', async () => {
             const isCorrectPass = await comparePassword(plaintextPassword, 'ijfdoaidj+101i23jolm');
             assert.isFalse(isCorrectPass);
+        });
+    })
+
+    //TODO think of more tests when DBController
+    describe('Test suite for login', () => {
+
+        it('should assert true with valid password', async () => {
+            const validLogin = await login('testUser1', plaintextPassword);
+            assert.isTrue(validLogin);
+        })
+
+        it('should assert false with invalid password', async () => {
+            const validLogin = await login('testUser1', 'notPassword');
+            assert.isFalse(validLogin);
         });
     })
 });
