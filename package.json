@@ -2,7 +2,7 @@
   "name": "free-spirit",
   "version": "0.0.1",
   "description": "This is a server applet to be used by the instructors and other personnel in Free Spirit Pilates",
-  "main": "Test.js",
+  "main": "Server/app.js",
   "scripts": {
     "test": "mocha 'test/**/*.spec.js"
   },
