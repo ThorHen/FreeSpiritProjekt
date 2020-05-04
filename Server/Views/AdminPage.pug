@@ -1,0 +1,14 @@
+html
+  head
+    style
+      include ../css/Admin.css
+  body
+    .users
+      h4 Brugere
+      ul(id="userlist")
+       each element in users
+         li= element
+    .buttons
+      button(type="button", href="*") Opret bruger
+      button(type="button", href="*") Rediger bruger
+      button(type="button") Slet bruger
