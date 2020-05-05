@@ -1,0 +1,17 @@
+.trainingForms{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto; 
+    row-gap: 50px;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    position: relative;
+    max-width: 200px;
+}
+.title{
+    text-align: center;
+  }

@@ -1,0 +1,9 @@
+include header 
+  style
+    include ../css/TrainingForms.css
+body
+  .trainingForms
+    each element in trainingforms
+      a(href="/Oevelser/"+element)
+        img(class="center", src="../pilates-reformer-uddannelse_3.jpg")
+        .title #{element}

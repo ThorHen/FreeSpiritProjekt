@@ -1,0 +1,8 @@
+include header
+  style
+    include ../css/ExerciseList.css
+body
+  .exercises
+    each element in exercises
+      a(href="/Oevelse/"+element)
+        li= element

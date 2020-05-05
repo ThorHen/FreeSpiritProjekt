@@ -107,7 +107,6 @@ exports.getExerciseInfo = async (exercise) => {
         result.push(exerciseSnapshot.docs[0].data().YoutubeEmbed)
         console.log(result);
 
-
         return result
     }
 }

@@ -1,0 +1,11 @@
+#body{
+    display: grid;
+    grid-gap:200px;
+}
+.tags a{
+
+}
+.tags{
+    display: inline-grid;
+    grid-template-columns: repeat(4,1fr);
+}

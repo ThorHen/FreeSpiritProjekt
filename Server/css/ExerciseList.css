@@ -1,4 +1,4 @@
-#userlist {
+.exercises{  
     max-height: 50%;
     overflow: hidden;
     font-size: 16pt;
@@ -10,13 +10,4 @@
     overflow-y: scroll;
     border-style: solid;
     display: grid;
-}
-.buttons {
-    text-align: center;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-.users h4{
-    text-align: center;
 }
