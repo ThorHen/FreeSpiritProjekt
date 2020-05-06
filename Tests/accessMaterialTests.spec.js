@@ -1,7 +1,8 @@
 const assert = require("chai").assert
 const { getUserPermissions, getAllTrainingForms, getUserTrainingForms,
-    getAllExercises, getTrainingExercises, getExerciseInfo
-} = require("../Controllers/dbController")
+    getAllExercises, getTrainingExercises, getExerciseInfo,
+    getExercisesByIdAndTag } = require("../Controllers/dbController")
+
 before(async () => {
     result = await getUserPermissions("P1")
     exercise = await getExerciseInfo("Downward facing dog")
@@ -39,13 +40,24 @@ describe("Test of exercises", () => {
         assert.equal(trainingExercises.includes("Downward facing dog"), true)
         assert.equal(trainingExercises.length, 2)
     })
+    it("Test get exercises by tag opvarmning", async () => {
+        const exercises = await getExercisesByIdAndTag("P1", "Opvarmning")
+        assert.equal(exercises.includes("Downward facing dog"), true)
+        assert.equal(exercises.includes("Kriger2"), true)
+        assert.equal(exercises.length, 2)
+    })
+    it("Test get exercises by tag nedkøling", async () => {
+        const exercises = await getExercisesByIdAndTag("P1", "Nedkøling")
+        assert.equal(exercises.includes("Downward facing dog"), true)
+        assert.equal(exercises.length, 1)
+    })
 })
 describe("Test of get 1 exercise", () => {
     it("Test get name of exercise", () => {
         assert.equal(exercise.includes("Downward facing dog"), true)
     })
     it("Test get description of exercise", () => {
-        assert.equal(exercise.includes("Downward facing dog is done like this"), true)
+        assert.equal(exercise.includes("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."), true)
     })
     it("Test get tags of exercise", () => {
         assert.equal(Array.isArray(exercise[3]), true)
@@ -54,7 +66,7 @@ describe("Test of get 1 exercise", () => {
         assert.equal(exercise[3].length, 2)
     })
     it("Test get youtube link of exercise", () => {
-        assert.equal(exercise[4], "https://youtu.be/YqOqM79McYY")
+        assert.equal(exercise[4], "YqOqM79McYY")
     })
     it("Test get links of exercise", () => {
         assert.equal(Array.isArray(exercise[1]), true)

@@ -22,11 +22,16 @@ app.get("/Oevelser/:id", async (req, res) => {
     const exercises = await dbController.getTrainingExercises(id)
     res.render(__dirname + "/Views/Exercises", { exercises, exercises })
 })
+app.get("/Oevelser/:id/:tag", async (req, res) => {
+    const id = req.params.id
+    const tag = req.params.tag
+    const exercises = await dbController.getExercisesByTag(id,tag)
+})
 
 app.get("/Oevelse/:id", async (req, res) => {
     const id = req.params.id
     console.log(id);
-    
+
     const exercise = await dbController.getExerciseInfo(id)
     res.render(__dirname + "/Views/Exercise", { exercise, exercise })
 })

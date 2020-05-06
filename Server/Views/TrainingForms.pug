@@ -5,5 +5,5 @@ body
   .trainingForms
     each element in trainingforms
       a(href="/Oevelser/"+element)
-        img(class="center", src="../pilates-reformer-uddannelse_3.jpg")
+        img(class="center", src=`../${element}.jpg`)
         .title #{element}

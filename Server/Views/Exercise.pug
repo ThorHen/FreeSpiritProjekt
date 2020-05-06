@@ -3,16 +3,18 @@ include header
     include ../css/Exercise.css
 body
   .tags 
-    b Tags
+    b Tags:
     each element in exercise[3]
       a(href=""+element) #{element}
   .video
-    iframe( width="1903" height="768" 
+    iframe(
   src="https://www.youtube.com/embed/"+exercise[4] frameborder="1" 
   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
   allowfullscreen)
-  .description #{exercise[0]}
+  .description 
+    b Beskrivelse
+    p #{exercise[0]}
   .links
-    h4 Links
+    b Links
     each element in exercise[1]
       a(href=element) #{element}

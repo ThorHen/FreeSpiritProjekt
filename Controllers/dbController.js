@@ -96,16 +96,53 @@ exports.getExerciseInfo = async (exercise) => {
     if (exerciseSnapshot.empty) {
         return
     } else {
-        let result = []/*
-        exerciseSnapshot.forEach(element => {
-            result.push(element.data())
-        });*/
+        let result = []
         result.push(exerciseSnapshot.docs[0].data().Description)
         result.push(exerciseSnapshot.docs[0].data().Links)
         result.push(exerciseSnapshot.docs[0].data().Name)
         result.push(exerciseSnapshot.docs[0].data().Tags)
         result.push(exerciseSnapshot.docs[0].data().YoutubeEmbed)
-        console.log(result);
+
+        return result
+    }
+}
+exports.getExercisesByIdAndTag = async (id, tag) => {
+    const userTrainingForms = await this.getUserTrainingForms(id)
+
+    let exercisesByForms = []
+    for (const element of userTrainingForms) {
+        const snapshot = await this.getTrainingExercises(element)
+        snapshot.forEach(element => {
+            if (!exercisesByForms.includes(element)) {
+                exercisesByForms.push(element)
+            }
+        })
+    }
+
+    const exercisesByTag = await this.getExercisesByTag(tag)
+    let result = []
+    exercisesByTag.forEach(element => {
+        if (exercisesByForms.includes(element)) {
+            if (!result.includes(element)) {
+                result.push(element)
+            }
+        }
+    })
+
+    return result
+}
+exports.getExercisesByTag = async (tag) => {
+    const snapshot = await db.collection("Exercises").get()
+    if (snapshot.empty) {
+        return
+    } else {
+        let result = []
+        snapshot.forEach(element => {
+            if (element.data().Tags.includes(tag)) {
+
+                result.push(element.data().Name)
+            }
+        })
 
         return result
     }

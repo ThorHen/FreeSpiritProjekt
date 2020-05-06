@@ -11,3 +11,13 @@
     border-style: solid;
     display: grid;
 }
+button{
+    background-color: darkgreen;
+    text-align: center;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr;
+    font-size: 20pt;
+    width: 100%;
+    padding: 15px;
+}
