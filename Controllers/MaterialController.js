@@ -57,9 +57,7 @@ async function getTrainingExercises(trainingForm) {
     } else {
         let exercises = []
         exercises = trainingFormExercises.docs[0].data().Exercises
-        exercises.sort()
-        console.log("type1: "+typeof exercises);
-        
+        exercises.sort()        
         return exercises
     }
 }
@@ -75,7 +73,6 @@ async function getExerciseInfo(exercise) {
         result.push(exerciseSnapshot.docs[0].data().Name)
         result.push(exerciseSnapshot.docs[0].data().Tags)
         result.push(exerciseSnapshot.docs[0].data().YoutubeEmbed)
-
         return result
     }
 }
@@ -112,8 +109,6 @@ async function getExercisesByTrainingformAndTag(trainingform, tag) {
             }
         })
         result.sort()
-        console.log("type2: " + typeof result);
-
         return result
     }
 }

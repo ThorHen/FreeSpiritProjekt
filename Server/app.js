@@ -20,7 +20,7 @@ app.get("/Admin", async (req, res) => {
 })
 
 app.get("/Traeningsformer", async (req, res) => {
-    const title = "Traeningsformer"
+    const title = "Træningsformer"
     const trainingforms = await MaterialController.getAllTrainingForms()
     res.render("TrainingForms", { trainingforms: trainingforms, title: title })
 })
@@ -29,7 +29,7 @@ app.get("/Oevelser/:tf/:tag", async (req, res) => {
     const tag = req.params.tag
     const trainingForm = req.params.tf
     req.session.trainingform = trainingForm
-    const title = "Oevelser"
+    const title = "Øvelser"
     let exercises = []
     if (tag==="alle") {
         exercises = await MaterialController.getTrainingExercises(trainingForm)
