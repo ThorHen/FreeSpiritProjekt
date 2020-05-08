@@ -4,6 +4,6 @@ body
   include Burger
   .trainingForms
     each element in trainingforms
-      a(href="/Oevelser/"+element)
+      a(href="/Oevelser/"+element+"/alle")
         img(class="center", src=`../${element}.jpg`)
         .title #{element}

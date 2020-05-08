@@ -25,33 +25,30 @@ app.get("/Traeningsformer", async (req, res) => {
     res.render("TrainingForms", { trainingforms: trainingforms, title: title })
 })
 
-app.get("/Oevelser/:tf/:tag?", async (req, res) => {
+app.get("/Oevelser/:tf/:tag", async (req, res) => {
     const tag = req.params.tag
     const trainingForm = req.params.tf
+    console.log(trainingForm);
     req.session.trainingform = trainingForm
+    console.log(trainingForm);
     const title = "Oevelser"
     let exercises = []
-    console.log(tag);
-    console.log(trainingForm);
-    console.log(req.session.trainingform);
-    if (!tag) {
+    if (tag==="alle") {
         exercises = await MaterialController.getTrainingExercises(trainingForm)
     } else {
         exercises = await MaterialController.getExercisesByTrainingformAndTag(trainingForm, tag)
         console.log(exercises);
     }
-    console.log(tag);
-    console.log(trainingForm);
-    console.log(req.session.trainingform);
 
 
 
-    res.render("Exercises", { exercises: exercises, title: title })
+
+    res.render("Exercises", { exercises: exercises, title: title , trainingForm: trainingForm})
 })
 
-app.get("/Oevelse/:id", async (req, res) => {
+app.get("/Oevelse/:tf/:id", async (req, res) => {
     const id = req.params.id
-    const trainingForm = req.session.trainingform
+    const trainingForm = req.params.tf
     const exercise = await MaterialController.getExerciseInfo(id)
     res.render("Exercise", { exercise: exercise, title: id, trainingForm: trainingForm })
 })

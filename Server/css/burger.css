@@ -8,23 +8,24 @@
   
   /* Hide the links inside the navigation menu (except for logo/home) */
   .topnav #Links {
-    display: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
   }
   
   /* Style navigation menu links */
   .topnav a {
     color: white;
-    padding: 14px 16px;
+    padding: 7px 8px;
     text-decoration: none;
     font-size: 17px;
-    display: block;
+    display: grid;
     height: 16px;
   }
  
   /* Style the hamburger menu */
   .topnav a.icon {
     background: black;
-    display: block;
+    display: grid;
     position: absolute;
     right: 0;
     top: 0;
