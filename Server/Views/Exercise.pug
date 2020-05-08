@@ -1,11 +1,10 @@
 include header
-  style
-    include ../css/Exercise.css
+  include ../css/Exercise.css
 body
   .tags 
     b Tags:
     each element in exercise[3]
-      a(href=""+element) #{element}
+      a(href="/Oevelser/"+element+"/dummy") #{element}
   .video
     iframe(
   src="https://www.youtube.com/embed/"+exercise[4] frameborder="1" 

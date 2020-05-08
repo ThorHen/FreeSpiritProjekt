@@ -1,38 +1,48 @@
 const express = require("express")
 const app = express()
-const dbController = require("../Controllers/dbController")
+const AdminController = require("../Controllers/AdminController")
+const MaterialController = require("../Controllers/MaterialController")
 
 app.set("view engine", "pug")
 //app.set("views", "/Server/Views")
 app.use(express.static("Server"))
 
+session = require('express-session');
+app.use(session({
+    secret: 'ADCC58BA-6703-4795-B94D-6C562784DAEB'
+    //TODO set expire
+}));
 
 app.get("/Admin", async (req, res) => {
-    const users = await dbController.getUserNames()
-    res.render(__dirname + "/Views/AdminPage", { users: users })
+    const title = "Admin"
+    const users = await AdminController.getUserNames()
+    res.render(__dirname + "/Views/AdminPage", { users: users, title: title })
 })
 
 app.get("/Traeningsformer", async (req, res) => {
-    const trainingforms = await dbController.getAllTrainingForms()
-    res.render(__dirname + "/Views/TrainingForms", { trainingforms: trainingforms })
+    const title = "Traeningsformer"
+    const trainingforms = await MaterialController.getAllTrainingForms()
+    res.render(__dirname + "/Views/TrainingForms", { trainingforms: trainingforms, title: title })
 })
 
-app.get("/Oevelser/:id", async (req, res) => {
-    const id = req.params.id
-    const exercises = await dbController.getTrainingExercises(id)
-    res.render(__dirname + "/Views/Exercises", { exercises, exercises })
+app.get("/Oevelser/:tf", async (req, res) => {
+    const trainingForm = req.params.tf
+    req.session.trainingform = trainingForm
+    const title = "Oevelser"
+    const exercises = await MaterialController.getTrainingExercises(trainingForm)
+    res.render(__dirname + "/Views/Exercises", { exercises: exercises, title: title })
 })
-app.get("/Oevelser/:id/:tag", async (req, res) => {
-    const id = req.params.id
+app.get("/Oevelser/:tag/:dummy", async (req, res) => {
+    const trainingForm = req.session.trainingform
     const tag = req.params.tag
-    const exercises = await dbController.getExercisesByTag(id,tag)
+    const title = "Oevelser"
+    const exercises = await MaterialController.getExercisesByTrainingformAndTag(trainingForm, tag)
+    res.render(__dirname + "/Views/Exercises", { exercises: exercises, title: title })
 })
 
 app.get("/Oevelse/:id", async (req, res) => {
     const id = req.params.id
-    console.log(id);
-
-    const exercise = await dbController.getExerciseInfo(id)
-    res.render(__dirname + "/Views/Exercise", { exercise, exercise })
+    const exercise = await MaterialController.getExerciseInfo(id)
+    res.render(__dirname + "/Views/Exercise", { exercise: exercise, title: id })
 })
 app.listen(8080, () => console.info("Server startet on 8080"))

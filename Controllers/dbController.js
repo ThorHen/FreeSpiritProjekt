@@ -10,18 +10,9 @@ const db = admin.firestore();
 
 
 exports.getUserNames = async () => {
-    const snapshot = await db.collection("Users").get()
-    if (snapshot.empty) {
-        return;
-    } else {
-        let result = [];
-        snapshot.forEach(element => {
-            result.push(element.data().Name);
-        });
-        result.sort()
-        return result;
-    }
+    return snapshot = await db.collection("Users").get()
 }
+
 exports.getSpecificUserPassword = async (userName) => {
     const snapshot = await db.collection("Users")
         .where("Username", "==", userName).get();
@@ -32,118 +23,30 @@ exports.getSpecificUserPassword = async (userName) => {
         return hashedPassword;
     }
 }
+
 exports.getUserPermissions = async (userName) => {
-    const userPermissions = await db.collection("Users")
+    return userPermissions = await db.collection("Users")
         .where("Username", "==", userName).get();
-
-    if (userPermissions.empty) {
-        return;
-    } else {
-        return userPermissions.docs[0].data().Permissions;
-    }
 }
+
 exports.getAllTrainingForms = async () => {
-    const trainingForms = await db.collection("TrainingForms").get()
+    return trainingForms = await db.collection("TrainingForms").get()
+}
 
-    if (trainingForms.empty) {
-        return
-    } else {
-        let forms = []
-        trainingForms.forEach(element => {
-            forms.push(element.data().Name)
-        });
-        return forms
-    }
-}
-exports.getUserTrainingForms = async (user) => {
-    const userPermissions = await this.getUserPermissions(user)
-    const trainingForms = await this.getAllTrainingForms()
-    let result = []
-    trainingForms.forEach(element => {
-        if (userPermissions.includes(element)) {
-            result.push(element)
-        }
-    })
-    return result
-}
 exports.getAllExercises = async () => {
-    const exercises = await db.collection("Exercises").get()
-
-    if (exercises.empty) {
-        return
-    } else {
-        let result = []
-        exercises.forEach(element => {
-            result.push(element.data().Name)
-        });
-        return result
-    }
+    return exercises = await db.collection("Exercises").get()
 }
+
 exports.getTrainingExercises = async (trainingForm) => {
-    const trainingFormExercises = await db.collection("TrainingForms")
+    return trainingFormExercises = await db.collection("TrainingForms")
         .where("Name", "==", trainingForm).get()
-
-    if (trainingFormExercises.empty) {
-        return
-    } else {
-        return trainingFormExercises.docs[0].data().Exercises
-    }
 }
+
 exports.getExerciseInfo = async (exercise) => {
-    const exerciseSnapshot = await db.collection("Exercises")
+    return exerciseSnapshot = await db.collection("Exercises")
         .where("Name", "==", exercise).get()
-
-    if (exerciseSnapshot.empty) {
-        return
-    } else {
-        let result = []
-        result.push(exerciseSnapshot.docs[0].data().Description)
-        result.push(exerciseSnapshot.docs[0].data().Links)
-        result.push(exerciseSnapshot.docs[0].data().Name)
-        result.push(exerciseSnapshot.docs[0].data().Tags)
-        result.push(exerciseSnapshot.docs[0].data().YoutubeEmbed)
-
-        return result
-    }
 }
-exports.getExercisesByIdAndTag = async (id, tag) => {
-    const userTrainingForms = await this.getUserTrainingForms(id)
 
-    let exercisesByForms = []
-    for (const element of userTrainingForms) {
-        const snapshot = await this.getTrainingExercises(element)
-        snapshot.forEach(element => {
-            if (!exercisesByForms.includes(element)) {
-                exercisesByForms.push(element)
-            }
-        })
-    }
-
-    const exercisesByTag = await this.getExercisesByTag(tag)
-    let result = []
-    exercisesByTag.forEach(element => {
-        if (exercisesByForms.includes(element)) {
-            if (!result.includes(element)) {
-                result.push(element)
-            }
-        }
-    })
-
-    return result
-}
 exports.getExercisesByTag = async (tag) => {
-    const snapshot = await db.collection("Exercises").get()
-    if (snapshot.empty) {
-        return
-    } else {
-        let result = []
-        snapshot.forEach(element => {
-            if (element.data().Tags.includes(tag)) {
-
-                result.push(element.data().Name)
-            }
-        })
-
-        return result
-    }
+    return snapshot = await db.collection("Exercises").get()
 }

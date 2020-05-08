@@ -1,7 +1,7 @@
 const assert = require("chai").assert
 const { getUserPermissions, getAllTrainingForms, getUserTrainingForms,
     getAllExercises, getTrainingExercises, getExerciseInfo,
-    getExercisesByIdAndTag } = require("../Controllers/dbController")
+    getExercisesByTrainingformAndTag } = require("../Controllers/MaterialController")
 
 before(async () => {
     result = await getUserPermissions("P1")
@@ -41,13 +41,13 @@ describe("Test of exercises", () => {
         assert.equal(trainingExercises.length, 2)
     })
     it("Test get exercises by tag opvarmning", async () => {
-        const exercises = await getExercisesByIdAndTag("P1", "Opvarmning")
+        const exercises = await getExercisesByTrainingformAndTag("Reformer", "Opvarmning")
         assert.equal(exercises.includes("Downward facing dog"), true)
         assert.equal(exercises.includes("Kriger2"), true)
         assert.equal(exercises.length, 2)
     })
     it("Test get exercises by tag nedkøling", async () => {
-        const exercises = await getExercisesByIdAndTag("P1", "Nedkøling")
+        const exercises = await getExercisesByTrainingformAndTag("Reformer", "Nedkøling")
         assert.equal(exercises.includes("Downward facing dog"), true)
         assert.equal(exercises.length, 1)
     })

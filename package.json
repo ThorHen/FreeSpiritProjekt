@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ThorHen/FreeSpiritProjekt#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "bcrypt": "^4.0.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
