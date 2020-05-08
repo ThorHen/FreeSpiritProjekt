@@ -8,7 +8,6 @@ admin.initializeApp({
 // DB setup
 const db = admin.firestore();
 
-
 exports.getUserNames = async () => {
     return snapshot = await db.collection("Users").get()
 }

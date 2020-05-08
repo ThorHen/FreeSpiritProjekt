@@ -4,7 +4,7 @@ const AdminController = require("../Controllers/AdminController")
 const MaterialController = require("../Controllers/MaterialController")
 
 app.set("view engine", "pug")
-//app.set("views", "/Server/Views")
+app.set("views", __dirname + "\\Views")
 app.use(express.static("Server"))
 
 session = require('express-session');
@@ -16,33 +16,43 @@ app.use(session({
 app.get("/Admin", async (req, res) => {
     const title = "Admin"
     const users = await AdminController.getUserNames()
-    res.render(__dirname + "/Views/AdminPage", { users: users, title: title })
+    res.render("AdminPage", { users: users, title: title })
 })
 
 app.get("/Traeningsformer", async (req, res) => {
     const title = "Traeningsformer"
     const trainingforms = await MaterialController.getAllTrainingForms()
-    res.render(__dirname + "/Views/TrainingForms", { trainingforms: trainingforms, title: title })
+    res.render("TrainingForms", { trainingforms: trainingforms, title: title })
 })
 
-app.get("/Oevelser/:tf", async (req, res) => {
+app.get("/Oevelser/:tf/:tag?", async (req, res) => {
+    const tag = req.params.tag
     const trainingForm = req.params.tf
     req.session.trainingform = trainingForm
     const title = "Oevelser"
-    const exercises = await MaterialController.getTrainingExercises(trainingForm)
-    res.render(__dirname + "/Views/Exercises", { exercises: exercises, title: title })
-})
-app.get("/Oevelser/:tag/:dummy", async (req, res) => {
-    const trainingForm = req.session.trainingform
-    const tag = req.params.tag
-    const title = "Oevelser"
-    const exercises = await MaterialController.getExercisesByTrainingformAndTag(trainingForm, tag)
-    res.render(__dirname + "/Views/Exercises", { exercises: exercises, title: title })
+    let exercises = []
+    console.log(tag);
+    console.log(trainingForm);
+    console.log(req.session.trainingform);
+    if (!tag) {
+        exercises = await MaterialController.getTrainingExercises(trainingForm)
+    } else {
+        exercises = await MaterialController.getExercisesByTrainingformAndTag(trainingForm, tag)
+        console.log(exercises);
+    }
+    console.log(tag);
+    console.log(trainingForm);
+    console.log(req.session.trainingform);
+
+
+
+    res.render("Exercises", { exercises: exercises, title: title })
 })
 
 app.get("/Oevelse/:id", async (req, res) => {
     const id = req.params.id
+    const trainingForm = req.session.trainingform
     const exercise = await MaterialController.getExerciseInfo(id)
-    res.render(__dirname + "/Views/Exercise", { exercise: exercise, title: id })
+    res.render("Exercise", { exercise: exercise, title: id, trainingForm: trainingForm })
 })
 app.listen(8080, () => console.info("Server startet on 8080"))

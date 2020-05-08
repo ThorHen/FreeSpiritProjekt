@@ -3,6 +3,7 @@
     overflow: hidden;
     background-color: #333;
     position: relative;
+
   }
   
   /* Hide the links inside the navigation menu (except for logo/home) */
@@ -17,8 +18,9 @@
     text-decoration: none;
     font-size: 17px;
     display: block;
+    height: 16px;
   }
-  
+ 
   /* Style the hamburger menu */
   .topnav a.icon {
     background: black;
@@ -27,7 +29,7 @@
     right: 0;
     top: 0;
   }
-  
+ 
   /* Add a grey background color on mouse-over */
   .topnav a:hover {
     background-color: #ddd;

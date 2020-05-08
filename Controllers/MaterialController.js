@@ -58,6 +58,8 @@ async function getTrainingExercises(trainingForm) {
         let exercises = []
         exercises = trainingFormExercises.docs[0].data().Exercises
         exercises.sort()
+        console.log("type1: "+typeof exercises);
+        
         return exercises
     }
 }
@@ -97,6 +99,7 @@ async function getExercisesByTag(tag) {
 async function getExercisesByTrainingformAndTag(trainingform, tag) {
     const trainingFormExercises = await getTrainingExercises(trainingform)
     const exercisesByTag = await getExercisesByTag(tag)
+
     if (trainingFormExercises.empty || exercisesByTag.empty) {
         return
     } else {
@@ -109,6 +112,8 @@ async function getExercisesByTrainingformAndTag(trainingform, tag) {
             }
         })
         result.sort()
+        console.log("type2: " + typeof result);
+
         return result
     }
 }
