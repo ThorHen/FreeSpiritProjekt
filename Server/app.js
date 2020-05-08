@@ -28,21 +28,14 @@ app.get("/Traeningsformer", async (req, res) => {
 app.get("/Oevelser/:tf/:tag", async (req, res) => {
     const tag = req.params.tag
     const trainingForm = req.params.tf
-    console.log(trainingForm);
     req.session.trainingform = trainingForm
-    console.log(trainingForm);
     const title = "Oevelser"
     let exercises = []
     if (tag==="alle") {
         exercises = await MaterialController.getTrainingExercises(trainingForm)
     } else {
         exercises = await MaterialController.getExercisesByTrainingformAndTag(trainingForm, tag)
-        console.log(exercises);
     }
-
-
-
-
     res.render("Exercises", { exercises: exercises, title: title , trainingForm: trainingForm})
 })
 
