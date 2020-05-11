@@ -1,4 +1,4 @@
-const dbController = require("../Controllers/dbController")
+const dbController = require('../Controllers/dbController')
 
 async function getUserPermissions(userName) {
     const userPermissions = await dbController.getUserPermissions(userName)
@@ -57,7 +57,7 @@ async function getTrainingExercises(trainingForm) {
     } else {
         let exercises = []
         exercises = trainingFormExercises.docs[0].data().Exercises
-        exercises.sort()        
+        exercises.sort()
         return exercises
     }
 }
@@ -73,6 +73,7 @@ async function getExerciseInfo(exercise) {
         result.push(exerciseSnapshot.docs[0].data().Name)
         result.push(exerciseSnapshot.docs[0].data().Tags)
         result.push(exerciseSnapshot.docs[0].data().YoutubeEmbed)
+
         return result
     }
 }

@@ -20,3 +20,6 @@
 .users h4{
     text-align: center;
 }
+.selected{
+    background: #fabdbd;
+}

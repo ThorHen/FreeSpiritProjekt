@@ -3,24 +3,31 @@
     overflow: hidden;
     background-color: #333;
     position: relative;
-    text-align: center;
+
   }
   
   /* Hide the links inside the navigation menu (except for logo/home) */
-  .topnav #Links {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    text-align: center;
+  .topnav #myLinks {
+    display: none;
   }
   
   /* Style navigation menu links */
   .topnav a {
     color: white;
-    padding: 7px 8px;
+    padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
-    display: grid;
+    display: block;
     height: 16px;
+  }
+ 
+  /* Style the hamburger menu */
+  .topnav a.icon {
+    background: black;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
  
   /* Add a grey background color on mouse-over */
@@ -31,6 +38,6 @@
   
   /* Style the active link (or home/logo) */
   .active {
-    background-color: #4CAF50;
+    background-color: #fabdbd;
     color: white;
   }

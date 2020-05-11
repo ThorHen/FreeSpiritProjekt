@@ -4,10 +4,10 @@ body
   include burger
   .users
     h4 Brugere
-    ul(id="userlist")
+    ul(id='userlist')
       each element in users
         li= element
   .buttons
-    button(type="button", href="*") Opret bruger
-    button(type="button", href="*") Rediger bruger
-    button(type="button") Slet bruger
+    button(type='button' href='*' id='Opret') Opret bruger
+    button(type='button' href='*' id='Rediger') Rediger bruger
+    button(type='Button', onclick='test()', id='Slet') Slet Bruger

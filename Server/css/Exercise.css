@@ -2,7 +2,6 @@
     display: grid;
     grid-auto-flow: row;
     grid-template-columns: repeat(4,1fr);
-    padding-top: 8px;
 }
 .tags a{
     text-align: center;

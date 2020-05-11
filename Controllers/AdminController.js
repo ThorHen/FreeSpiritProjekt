@@ -1,4 +1,4 @@
-const dbController = require("../Controllers/dbController")
+const dbController = require('../Controllers/dbController')
 
 async function getUserNames() {
     const snapshot = await dbController.getUserNames()
@@ -14,4 +14,12 @@ async function getUserNames() {
     }
 
 }
-module.exports = { getUserNames }
+async function deleteUser(user) {
+    if (!user) {
+        return
+    } else {
+        let id = await dbController.getUserDocumentID(user)
+        await dbController.deleteUser(id)
+    }
+}
+module.exports = { getUserNames, deleteUser }
