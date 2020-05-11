@@ -1,0 +1,9 @@
+include header 
+  include ../css/TrainingForms.css
+body
+  include Burger
+  .trainingForms
+    each element in trainingforms
+      a(href='/Oevelser/'+element+'/alle')
+        img(class='center', src=`../${element}.jpg`)
+        .title #{element}

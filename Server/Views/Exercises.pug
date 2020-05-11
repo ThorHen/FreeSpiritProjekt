@@ -1,0 +1,10 @@
+include header
+  include ../css/ExerciseList.css
+body
+  include burger
+  .exercises
+    each element in exercises
+      a(href='/Oevelse/'+element)
+        li= element
+  .button
+    button(type='button',href='*') Opret øvelse

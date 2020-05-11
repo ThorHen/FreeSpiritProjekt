@@ -109,3 +109,6 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/windows,eclipse,visualstudiocode
 node_modules
+
+# DB JSON
+FreeSpiritdb.json

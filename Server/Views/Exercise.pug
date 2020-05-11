@@ -1,0 +1,20 @@
+include header
+  include ../css/Exercise.css
+body
+  include burger
+  .tags 
+    b Tags:
+    each element in exercise[3]
+      a(href='/Oevelser/'+trainingForm+'/'+element) #{element}
+  .video
+    iframe(
+  src='https://www.youtube.com/embed/'+exercise[4] frameborder='1' 
+  allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' 
+  allowfullscreen)
+  .description 
+    b Beskrivelse
+    p #{exercise[0]}
+  .links
+    b Links
+    each element in exercise[1]
+      a(href=element) #{element}
