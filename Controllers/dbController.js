@@ -11,6 +11,17 @@ const db = admin.firestore();
 exports.getUserNames = async () => {
     return snapshot = await db.collection('Users').get()
 }
+exports.getUserDocumentID = async (user) => {
+    const snapshot = await db.collection('Users').where('Name', '==', user).get()
+    if (snapshot.empty) {
+        return
+    } else {
+        return snapshot.docs[0].id
+    }
+}
+exports.deleteUser = async (id) => {
+    await db.collection('Users').doc(id).delete();
+}
 
 exports.getSpecificUserPassword = async (userName) => {
     const snapshot = await db.collection('Users')

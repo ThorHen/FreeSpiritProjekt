@@ -8,6 +8,7 @@ body
       each element in users
         li= element
   .buttons
-    button(type='button', href='*') Opret bruger
-    button(type='button', href='*') Rediger bruger
-    button(type='button') Slet bruger
+    button(type='button' href='*' id='Opret') Opret bruger
+    button(type='button' href='*' id='Rediger') Rediger bruger
+    form(action='Admin/slet/' method='POST')
+      button(type='submit') Slet bruger

@@ -18,7 +18,13 @@ app.get('/Admin', async (req, res) => {
     const users = await AdminController.getUserNames()
     res.render('AdminPage', { users: users, title: title })
 })
+app.post('/Admin/slet/:id', async (req, res) => {
+    const id = req.params.id
+    console.log(id);
+    // await AdminController.deleteUser(id)
+    res.redirect('/Admin')
 
+})
 app.get('/Traeningsformer', async (req, res) => {
     const title = 'Traeningsformer'
     const trainingforms = await MaterialController.getAllTrainingForms()
@@ -31,7 +37,7 @@ app.get('/Oevelser/:tf/:tag', async (req, res) => {
     req.session.trainingform = trainingForm
     const title = 'Oevelser'
     let exercises = []
-    if (tag==='alle') {
+    if (tag === 'alle') {
         exercises = await MaterialController.getTrainingExercises(trainingForm)
     } else {
         exercises = await MaterialController.getExercisesByTrainingformAndTag(trainingForm, tag)
