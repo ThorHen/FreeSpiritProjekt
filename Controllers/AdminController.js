@@ -1,4 +1,4 @@
-const dbController = require("../Controllers/dbController")
+const dbController = require('../Controllers/dbController')
 
 async function getUserNames() {
     const snapshot = await dbController.getUserNames()

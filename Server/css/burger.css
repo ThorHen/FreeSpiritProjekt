@@ -7,7 +7,7 @@
   }
   
   /* Hide the links inside the navigation menu (except for logo/home) */
-  .topnav #Links {
+  .topnav #myLinks {
     display: none;
   }
   

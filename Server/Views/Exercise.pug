@@ -5,11 +5,11 @@ body
   .tags 
     b Tags:
     each element in exercise[3]
-      a(href=`/Oevelser/${trainingForm}/`+element) #{element}
+      a(href='/Oevelser/'+trainingForm+'/'+element) #{element}
   .video
     iframe(
-  src="https://www.youtube.com/embed/"+exercise[4] frameborder="1" 
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+  src='https://www.youtube.com/embed/'+exercise[4] frameborder='1' 
+  allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' 
   allowfullscreen)
   .description 
     b Beskrivelse

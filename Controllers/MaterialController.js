@@ -1,4 +1,4 @@
-const dbController = require("../Controllers/dbController")
+const dbController = require('../Controllers/dbController')
 
 async function getUserPermissions(userName) {
     const userPermissions = await dbController.getUserPermissions(userName)
@@ -58,8 +58,6 @@ async function getTrainingExercises(trainingForm) {
         let exercises = []
         exercises = trainingFormExercises.docs[0].data().Exercises
         exercises.sort()
-        console.log("type1: "+typeof exercises);
-        
         return exercises
     }
 }
@@ -112,8 +110,6 @@ async function getExercisesByTrainingformAndTag(trainingform, tag) {
             }
         })
         result.sort()
-        console.log("type2: " + typeof result);
-
         return result
     }
 }
