@@ -125,5 +125,10 @@ app.post('/auth', async (req, res) => {
     res.end();
 });
 
+app.get('/logout', authenticateLoginStatus, (req, res) => {
+    req.session.destroy();
+    res.redirect('/login');
+})
+
 const portNumber = 8080;
 app.listen(portNumber, () => console.log(`Server started on ${portNumber}`));
