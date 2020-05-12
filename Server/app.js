@@ -5,7 +5,6 @@ const MaterialController = require('../Controllers/MaterialController');
 const loginController = require('../Controllers/LoginController')
 const sessionConfig = require('../SessionSecret.json');
 const userController = require('../Controllers/UserController');
-const getUserType = require('../Controllers/dbController').getUserType;
 
 app.set('view engine', 'pug');
 app.set('views', __dirname + '\\Views');
@@ -27,7 +26,16 @@ function authenticateLoginStatus(req, res, next) {
     }
 }
 
-app.get('/Admin', authenticateLoginStatus, async (req, res) => {
+function isAdmin(req, res, next) {
+    if(req.session.admin == '1') {
+        return next();
+    }
+    else {
+        res.send('Du har ikke admin privilegier');
+    }
+}
+
+app.get('/Admin', isAdmin, async (req, res) => {
     const title = 'Admin';
     const users = await AdminController.getUserNames();
     res.render('AdminPage', { users: users, title: title });
@@ -60,14 +68,14 @@ app.get('/Oevelse/:id', authenticateLoginStatus, async (req, res) => {
     res.render('Exercise', { exercise: exercise, title: id, trainingForm: trainingForm });
 })
 
-app.get('/opretBruger', authenticateLoginStatus, async (req, res) => {
+app.get('/opretBruger', isAdmin, async (req, res) => {
     let trainingTypes = await MaterialController.getAllTrainingForms();
 
     res.render('CreateUser', { trainingTypes: trainingTypes })
     res.end();
 })
 
-app.post('/createNewUser', authenticateLoginStatus, async (req, res) => {
+app.post('/createNewUser', isAdmin, async (req, res) => {
     console.log(req.body);
 
     let admin = req.body.admin;
@@ -112,11 +120,12 @@ app.post('/auth', async (req, res) => {
     const validLogin = await loginController.login(username, password);
 
     if (validLogin) {
-        //TODO setup userType
-        req.session.userType = await getUserType(username);
+        let userType = await userController.getUserType(username);
+        //req.session.titles = userType.titles;
+        req.session.admin = userType.admin;
+        req.session.permissions = userType.permissions;
         req.session.loggedIn = true;
         req.session.username = username;
-        //TODO redirect to home
         res.redirect('/traeningsformer');
     }
     else {

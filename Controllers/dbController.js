@@ -12,37 +12,17 @@ async function getUserNames() {
     return snapshot = await db.collection('Users').get()
 }
 
-async function getSpecificUserPassword(userName) {
-    
-    const snapshot = await db.collection('Users')
-        .where('username', '==', userName).get();
-    if (snapshot.empty) {
-        return;
-    } else {
-        const hashedPassword = snapshot.docs[0].data().hashedPassword.hashedPassword;
-        return hashedPassword;
-    }
-}
+async function getUser(username) {
+    let snapshot = await db.collection('Users')
+    .where('username', '==', username).get();
 
-async function getUserPermissions(userName) {
-    return userPermissions = await db.collection('Users')
-        .where('Username', '==', userName).get();
-}
-
-async function getUserType(username) {
-    const snapshot = await db.collection('Users')
-        .where('Username', '==', username).get();
-    if (snapshot.empty) {
-        return;
-    } else {
-        const userType = snapshot.docs[0].data().title
-        return userType;
-    }
+    let user = snapshot.docs[0].data();
+    return user;
 }
 
 async function createUser(admin, name, email, username, hashedPassword, permissions, titles) {
     let newUser = {admin: admin, name: name, email: email, username: username, 
-        hashedPassword: hashedPassword, permissions: permissions, titles: titles}
+        hashObj: hashedPassword, permissions: permissions, titles: titles}
 
     db.collection('Users').add(newUser);
 
@@ -67,4 +47,4 @@ async function getExerciseInfo(exercise) {
         .where('Name', '==', exercise).get()
 }
 
-module.exports = { getUserNames, getSpecificUserPassword, getUserPermissions, getAllTrainingForms, getAllExercises, getTrainingExercises, getExerciseInfo, getUserType, createUser }
+module.exports = { getUserNames, getUser, getAllTrainingForms, getAllExercises, getTrainingExercises, getExerciseInfo, createUser }

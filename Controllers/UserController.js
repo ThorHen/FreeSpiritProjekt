@@ -10,4 +10,13 @@ async function createNewUser(admin, name, email, username, password, permissions
     return newUser;
 }
 
-module.exports = {createNewUser};
+async function getUserType(username) {
+    const returnedUser = await dbController.getUser(username);
+    if (!returnedUser) {
+        return;
+    } else {
+        return {titles: returnedUser.titles, admin: returnedUser.admin, permissions: returnedUser.permissions};
+    }
+}
+
+module.exports = {createNewUser, getUserType};

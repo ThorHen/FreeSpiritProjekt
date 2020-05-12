@@ -1,9 +1,6 @@
 const bcrypt = require('bcrypt');
 const dbController = require('./dbController');
 
-console.log('DBcontroller: ' + dbController);
-
-
 const saltRounds = 12;
 
 async function saltAndHashPassword(plaintextPassword) {
@@ -23,7 +20,7 @@ async function comparePassword(plaintextPassword, hashedPassword) {
 
 async function login(username, plaintextPassword) {
     //Contact db for any users with given username (should utilize DBController function?)
-    let returnedUserPassword = await dbController.getSpecificUserPassword(username);
+    let returnedUserPassword = await getSpecificUserPassword(username);
     
 
     let validLogin = await comparePassword(plaintextPassword, returnedUserPassword);
@@ -31,4 +28,15 @@ async function login(username, plaintextPassword) {
     return validLogin;
 }
 
-module.exports = {saltAndHashPassword, comparePassword, login};
+async function getSpecificUserPassword(username) {
+    const returnedUser = await dbController.getUser(username);
+
+    if(!returnedUser) {
+        return;
+    }
+    else {
+        return returnedUser.hashObj.hashedPassword;
+    }
+}
+
+module.exports = {saltAndHashPassword, comparePassword, login, getSpecificUserPassword};
