@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title Login
+    style
+      include ../css/Login.css
+  body
+    .login-form
+      h1 Login Form
+      form(action="auth" method="POST")
+        input(type="text" name="username" placeholder="Username" required)
+        input(type="password" name="password" placeholder="Password" required)
+        input(type="submit" value="Log ind")
+
+        if error
+            .alert
+               p #[strong Error!] #{error}

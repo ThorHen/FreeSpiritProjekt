@@ -1,0 +1,35 @@
+include header
+  include ../css/CreateUser.css
+body
+  include burger
+  .createUser
+    h1 Opret ny bruger
+    form(action="createNewUser" method="post")
+        .admin
+            p Admin:
+            input(type="radio" id="false" name="admin" value="0" checked) 
+            label(for="false") False
+            input(type="radio" id="true" name="admin", value="1")
+            label(for="true") True
+        input(type="text" name="name" placeholder="Navn" required)
+        input(type="text" name="email" placeholder="E-mail")
+        input(type="text" name="username" placeholder="Username" required)
+        input(type="password" name="password" placeholder="Password" required)
+        input(type="password" name="repeatPassword" placeholder="Gentag password" required)
+        .permissions
+            p Brugeren skal have adgang til:
+            each element in trainingTypes
+                input(type="checkbox" id=element name=element value=element)
+                label(for=element) #{element}
+        .title
+            label Vælg stilling
+            br
+            input(type="checkbox" id="Leder" name="Leder" value="Leder")
+            label(for="Leder") Leder
+            input(type="checkbox" id="Instruktoer" name="Instruktoer" value="Instruktoer")
+            label(for="Instruktoer") Instruktør
+            input(type="checkbox" id="Rengoering" name="Rengoering" value="Rengoering")
+            label(for="Rengoering") Rengøring
+
+        input(type="submit" value="Opret bruger")
+

@@ -9,15 +9,12 @@ const saltAndHashPassword = require('../Controllers/LoginController').saltAndHas
 const comparePassword = require('../Controllers/LoginController').comparePassword;
 const login = require('../Controllers/LoginController').login;
 
-//console.log(`Login function: ${login}, saltAndHashPassword function: ${saltAndHashPassword}`);
-
 describe('Test suite for Login functionalities', () => {
     const plaintextPassword = '123password';
     let hashObj;
 
     before(async () => {
         hashObj = await saltAndHashPassword(plaintextPassword);
-        console.log(hashObj.hashedPassword);
     })
 
     describe('Test suite for saltAndHashPassword', () => {

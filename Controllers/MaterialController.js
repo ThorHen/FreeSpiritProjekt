@@ -79,7 +79,7 @@ async function getExerciseInfo(exercise) {
 }
 
 async function getExercisesByTag(tag) {
-    const snapshot = await dbController.getExercisesByTag(tag)
+    const snapshot = await dbController.getAllExercises();
     if (snapshot.empty) {
         return
     } else {
