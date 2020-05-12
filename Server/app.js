@@ -35,19 +35,19 @@ function isAdmin(req, res, next) {
     }
 }
 
-app.get('/Admin', isAdmin, async (req, res) => {
+app.get('/admin', isAdmin, async (req, res) => {
     const title = 'Admin';
     const users = await AdminController.getUserNames();
     res.render('AdminPage', { users: users, title: title });
 })
 
-app.get('/Traeningsformer', authenticateLoginStatus, async (req, res) => {
+app.get('/traeningsformer', authenticateLoginStatus, async (req, res) => {
     const title = 'Traeningsformer';
     const trainingforms = await MaterialController.getAllTrainingForms();
     res.render('TrainingForms', { trainingforms: trainingforms, title: title });
 })
 
-app.get('/Oevelser/:tf/:tag', authenticateLoginStatus, async (req, res) => {
+app.get('/oevelser/:tf/:tag', authenticateLoginStatus, async (req, res) => {
     const tag = req.params.tag;
     const trainingForm = req.params.tf;
     req.session.trainingform = trainingForm;
@@ -61,7 +61,7 @@ app.get('/Oevelser/:tf/:tag', authenticateLoginStatus, async (req, res) => {
     res.render('Exercises', { exercises: exercises, title: title });
 })
 
-app.get('/Oevelse/:id', authenticateLoginStatus, async (req, res) => {
+app.get('/oevelse/:id', authenticateLoginStatus, async (req, res) => {
     const id = req.params.id;
     const trainingForm = req.session.trainingform;
     const exercise = await MaterialController.getExerciseInfo(id);
