@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
-//TODO require getSpecificUser() from DBController
-const getSpecificUserPassword = require('./dbController').getSpecificUserPassword;
+const dbController = require('./dbController');
+
+console.log('DBcontroller: ' + dbController);
+
 
 const saltRounds = 12;
 
@@ -21,7 +23,7 @@ async function comparePassword(plaintextPassword, hashedPassword) {
 
 async function login(username, plaintextPassword) {
     //Contact db for any users with given username (should utilize DBController function?)
-    let returnedUserPassword = await getSpecificUserPassword(username);
+    let returnedUserPassword = await dbController.getSpecificUserPassword(username);
     
 
     let validLogin = await comparePassword(plaintextPassword, returnedUserPassword);

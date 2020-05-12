@@ -54,14 +54,41 @@ app.get('/Oevelse/:id', async (req, res) => {
 app.get('/opretBruger', async (req, res) => {
     let trainingTypes = await MaterialController.getAllTrainingForms();
 
-    res.render('CreateUser', {trainingTypes: trainingTypes})
+    res.render('CreateUser', { trainingTypes: trainingTypes })
     res.end();
 })
 
 app.post('/createNewUser', async (req, res) => {
     console.log(req.body);
 
-    res.send('Modtaget')
+    let admin = req.body.admin;
+    let name = req.body.name;
+    let email = req.body.email;
+    let username = req.body.username;
+    let password = req.body.password;
+    let repeatPassword = req.body.repeatPassword;
+    let permissions = [];
+
+    let trainingForms = await MaterialController.getAllTrainingForms();
+    for (tf of trainingForms) {
+        if (req.body.hasOwnProperty(tf)) {
+            permissions.push(tf);
+        }
+    }
+
+    let titles = [];
+    if (req.body.hasOwnProperty('Instruktoer')) titles.push('Intruktoer');
+    if (req.body.hasOwnProperty('Leder')) titles.push('Leder');
+    if (req.body.hasOwnProperty('Rengoering')) titles.push('Rengoering');
+    if (password == repeatPassword) {
+        userController.createNewUser(admin, name, email, username, password, permissions, titles);
+        res.send('Bruger oprettet');
+    }
+    else {
+        res.render('CreateUser', {trainingTypes: trainingForms, error: 'Password felterne stemmer ikke overens'})
+    }
+
+    res.end()
 })
 
 app.get('/login', async (req, res) => {

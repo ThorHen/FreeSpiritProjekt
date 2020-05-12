@@ -4,9 +4,6 @@ const serviceAccount = require('../FreeSpiritdb.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
-const saltAndHashPassword = require('../Controllers/LoginController').saltAndHashPassword;
-
-const User = require('../Model/User').User;
 
 // DB setup
 const db = admin.firestore();
@@ -16,12 +13,15 @@ async function getUserNames() {
 }
 
 async function getSpecificUserPassword(userName) {
+    console.log('Entered getSpecificUserPassword');
+    
     const snapshot = await db.collection('Users')
-        .where('Username', '==', userName).get();
+        .where('username', '==', userName).get();
     if (snapshot.empty) {
         return;
     } else {
-        const hashedPassword = snapshot.docs[0].data().Password
+        const hashedPassword = snapshot.docs[0].data().hashedPassword.hashedPassword;
+        console.log(`Hashed password: ${hashedPassword}`);
         return hashedPassword;
     }
 }
@@ -42,9 +42,9 @@ async function getUserType(username) {
     }
 }
 
-async function createUser(admin, name, email, username, password, permissions, title) {
-    let hashedPassword = await saltAndHashPassword(password);
-    let newUser = new User(admin, name, email, username, hashedPassword, permissions, title);
+async function createUser(admin, name, email, username, hashedPassword, permissions, titles) {
+    let newUser = {admin: admin, name: name, email: email, username: username, 
+        hashedPassword: hashedPassword, permissions: permissions, titles: titles}
 
     db.collection('Users').add(newUser);
 

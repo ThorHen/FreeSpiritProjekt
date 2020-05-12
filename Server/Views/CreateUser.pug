@@ -6,7 +6,7 @@ body
     h1 Opret ny bruger
     form(action="createNewUser" method="post")
         .admin
-            p Admin:
+            label Admin:
             input(type="radio" id="false" name="admin" value="0" checked) 
             label(for="false") False
             input(type="radio" id="true" name="admin", value="1")
@@ -16,20 +16,24 @@ body
         input(type="text" name="username" placeholder="Username" required)
         input(type="password" name="password" placeholder="Password" required)
         input(type="password" name="repeatPassword" placeholder="Gentag password" required)
+        if error
+          .alert
+            p #[strong Error!] #{error}
         .permissions
-            p Brugeren skal have adgang til:
+            label Brugeren skal have adgang til:
+            br
             each element in trainingTypes
                 input(type="checkbox" id=element name=element value=element)
                 label(for=element) #{element}
         .title
-            label Vælg stilling
+            label Vælg stilling:
             br
-            input(type="checkbox" id="Leder" name="Leder" value="Leder")
-            label(for="Leder") Leder
-            input(type="checkbox" id="Instruktoer" name="Instruktoer" value="Instruktoer")
-            label(for="Instruktoer") Instruktør
-            input(type="checkbox" id="Rengoering" name="Rengoering" value="Rengoering")
-            label(for="Rengoering") Rengøring
+            input(type="checkbox" id="leder" name="stilling" value="leder")
+            label(for="leder") Leder
+            input(type="checkbox" id="instruktoer" name="stilling" value="instruktoer")
+            label(for="instruktoer") Instruktør
+            input(type="checkbox" id="rengoering" name="stilling" value="rengoering")
+            label(for="rengoering") Rengøring
 
         input(type="submit" value="Opret bruger")
 

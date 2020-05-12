@@ -34,11 +34,17 @@ form label {
 }
 
 .permissions {
-    padding-bottom: 15px;
+    height: fit-content;
 }
 
 input[type="checkbox"] {
-
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
-
+.alert {
+    padding: 2px;
+    background-color: #f44336;
+    color: white;
+    align-content: center;
+  }

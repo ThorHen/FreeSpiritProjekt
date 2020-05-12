@@ -1,4 +1,4 @@
-const dbController = require('../Controllers/dbController')
+const dbController = require('./dbController')
 
 async function getUserPermissions(userName) {
     const userPermissions = await dbController.getUserPermissions(userName)
