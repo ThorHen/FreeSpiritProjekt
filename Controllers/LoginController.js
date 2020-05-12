@@ -27,7 +27,7 @@ async function login(username, plaintextPassword) {
     
 
     let validLogin = await comparePassword(plaintextPassword, returnedUserPassword);
-    console.log(`Valid login: ${validLogin}`);
+
     return validLogin;
 }
 

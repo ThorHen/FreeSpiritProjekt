@@ -18,19 +18,28 @@ app.use(express.urlencoded());
 session = require('express-session');
 app.use(session(sessionConfig));
 
-app.get('/Admin', async (req, res) => {
+function authenticateLoginStatus(req, res, next) {
+    if(req.session.loggedIn) {
+        return next();
+    }
+    else {
+        res.redirect('/login')
+    }
+}
+
+app.get('/Admin', authenticateLoginStatus, async (req, res) => {
     const title = 'Admin';
     const users = await AdminController.getUserNames();
     res.render('AdminPage', { users: users, title: title });
 })
 
-app.get('/Traeningsformer', async (req, res) => {
+app.get('/Traeningsformer', authenticateLoginStatus, async (req, res) => {
     const title = 'Traeningsformer';
     const trainingforms = await MaterialController.getAllTrainingForms();
     res.render('TrainingForms', { trainingforms: trainingforms, title: title });
 })
 
-app.get('/Oevelser/:tf/:tag', async (req, res) => {
+app.get('/Oevelser/:tf/:tag', authenticateLoginStatus, async (req, res) => {
     const tag = req.params.tag;
     const trainingForm = req.params.tf;
     req.session.trainingform = trainingForm;
@@ -44,21 +53,21 @@ app.get('/Oevelser/:tf/:tag', async (req, res) => {
     res.render('Exercises', { exercises: exercises, title: title });
 })
 
-app.get('/Oevelse/:id', async (req, res) => {
+app.get('/Oevelse/:id', authenticateLoginStatus, async (req, res) => {
     const id = req.params.id;
     const trainingForm = req.session.trainingform;
     const exercise = await MaterialController.getExerciseInfo(id);
     res.render('Exercise', { exercise: exercise, title: id, trainingForm: trainingForm });
 })
 
-app.get('/opretBruger', async (req, res) => {
+app.get('/opretBruger', authenticateLoginStatus, async (req, res) => {
     let trainingTypes = await MaterialController.getAllTrainingForms();
 
     res.render('CreateUser', { trainingTypes: trainingTypes })
     res.end();
 })
 
-app.post('/createNewUser', async (req, res) => {
+app.post('/createNewUser', authenticateLoginStatus, async (req, res) => {
     console.log(req.body);
 
     let admin = req.body.admin;
@@ -108,7 +117,7 @@ app.post('/auth', async (req, res) => {
         req.session.loggedIn = true;
         req.session.username = username;
         //TODO redirect to home
-        res.redirect('/home');
+        res.redirect('/traeningsformer');
     }
     else {
         res.render('login', { error: 'Invalid username or password' });
