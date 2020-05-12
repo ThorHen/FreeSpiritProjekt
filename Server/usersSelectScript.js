@@ -1,4 +1,4 @@
-document.querySelector('ul').addEventListener('click', function (event) {
+document.querySelector('ul').addEventListener('click',async function (event) {
     let selected;
 
     if (event.target.tagName === 'LI') {
@@ -9,11 +9,13 @@ document.querySelector('ul').addEventListener('click', function (event) {
         event.target.className = 'selected'
     }
     console.log(selected.textContent);
-
 })
 
-// document.getElementById('Slet').addEventListener('click', async function () {
-//     let selected = document.querySelector('li.selected')
-//     console.log(selected);
-//     await adminController.deleteUser(selected)
-// })
+ async function test() {
+    selectBruger = document.querySelector('li.selected').textContent
+    console.log(selectBruger);
+    const deleteuser = await fetch('Admin/slet/'+selectBruger, {
+        method: 'POST'
+    })
+    location.reload()
+ }

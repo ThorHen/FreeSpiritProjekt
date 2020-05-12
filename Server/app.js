@@ -21,9 +21,8 @@ app.get('/Admin', async (req, res) => {
 app.post('/Admin/slet/:id', async (req, res) => {
     const id = req.params.id
     console.log(id);
-    // await AdminController.deleteUser(id)
+    await AdminController.deleteUser(id)
     res.redirect('/Admin')
-
 })
 app.get('/Traeningsformer', async (req, res) => {
     const title = 'Traeningsformer'
