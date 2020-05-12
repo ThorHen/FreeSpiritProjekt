@@ -1,18 +1,12 @@
 const assert = require('chai').assert
-const { getUserPermissions, getAllTrainingForms, getUserTrainingForms,
+const { getAllTrainingForms, getUserTrainingForms,
     getAllExercises, getTrainingExercises, getExerciseInfo,
     getExercisesByTrainingformAndTag } = require('../Controllers/MaterialController')
 
 before(async () => {
-    result = await getUserPermissions('P1')
     exercise = await getExerciseInfo('Downward facing dog')
 })
 describe('Test of training form list', () => {
-    it('p1 access is reformer and barre', () => {
-        assert.equal(result.includes('Reformer'), true)
-        assert.equal(result.includes('Barre'), true)
-        assert.equal(result.length, 2)
-    })
     it('Test show all training forms', async () => {
         let trainingForms = await getAllTrainingForms()
         assert.equal(trainingForms.includes('Barre'), true)
@@ -22,8 +16,6 @@ describe('Test of training form list', () => {
     })
     it('Test get users training forms', async () => {
         let userTrainingForms = await getUserTrainingForms('P1')
-        assert.equal(userTrainingForms.includes(result[0]), true)
-        assert.equal(userTrainingForms.includes(result[1]), true)
         assert.equal(userTrainingForms.length, 2)
     })
 })

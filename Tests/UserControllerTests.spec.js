@@ -1,8 +1,6 @@
 //Setup of testing environment
-const assert = require('chai').assert;
-const expect = require('chai').expect;
-
-const createNewUser = require('../Controllers/UserController').createNewUser;
+const {assert, expect} = require('chai');
+const {createNewUser, getUserType} = require('../Controllers/UserController');
 
 describe('Test suite for UserController', () => {
 
@@ -32,16 +30,33 @@ describe('Test suite for UserController', () => {
             assert.equal(returnedUser.username, 'MrThoreh');
         })
 
-        it('should have correct permissions', () => {
-            assert.equal(returnedUser.permissions, ['Yoga', 'Pilates']);
+        it('should have correct yoga permission', () => {
+            assert.isTrue(returnedUser.permissions.includes('Yoga'));
+        })
+
+        it('should have correct pilates permission', () => {
+            assert.isTrue(returnedUser.permissions.includes('Pilates'));
         })
 
         it('should have correct titles', () => {
-            assert.equal(returnedUser.titles, ['Instruktoer']);
+            assert.isTrue(returnedUser.titles.includes('Instruktoer'));
         })
 
         after(() => {
             //delete returnedUser from db
+        })
+    })
+
+    describe('Test suite for getUserType', () => {
+        let result;
+        before(async () => {
+            result = await getUserType('Thoreh');
+        })
+        it('Thoreh access is reformer and barre', async () => {
+            assert.equal(result.permissions.includes('Reformer'), true);
+        })
+        it('Thoreh has access to barre', () => {
+            assert.equal(result.permissions.includes('Barre'), true);
         })
     })
 })

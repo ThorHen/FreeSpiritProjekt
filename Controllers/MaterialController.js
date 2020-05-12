@@ -16,9 +16,10 @@ async function getAllTrainingForms() {
     }
 }
 async function getUserTrainingForms(user) {
-    const userPermissions = await userController.getUserPermissions(user)
-    const trainingForms = await getAllTrainingForms()
-    if (userPermissions.empty || trainingForms.empty) {
+    const userType = await userController.getUserType(user)
+    const userPermissions = userType.permissions;
+    const trainingForms = await getAllTrainingForms();
+    if (userPermissions.length === 0 || trainingForms.empty) {
         return
     } else {
         let result = []

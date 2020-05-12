@@ -1,6 +1,6 @@
 const assert = require('chai').assert
 const { getUserNames } = require('../Controllers/AdminController')
-const {getSpecificUserPassword}=require('../Controllers/dbController')
+const {getSpecificUserPassword}=require('../Controllers/LoginController')
 
 let result = []
 before(async () => {
