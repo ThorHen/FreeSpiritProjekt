@@ -13,7 +13,6 @@ async function getUserNames() {
 }
 
 async function getSpecificUserPassword(userName) {
-    console.log('Entered getSpecificUserPassword');
     
     const snapshot = await db.collection('Users')
         .where('username', '==', userName).get();
@@ -21,7 +20,6 @@ async function getSpecificUserPassword(userName) {
         return;
     } else {
         const hashedPassword = snapshot.docs[0].data().hashedPassword.hashedPassword;
-        console.log(`Hashed password: ${hashedPassword}`);
         return hashedPassword;
     }
 }

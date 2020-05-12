@@ -22,7 +22,7 @@ describe('Test of getting users from DB', () => {
 })
 describe('Test get user password', () => {
     it('Returns correct password', async () => {
-        const password = await getSpecificUserPassword('T2')
-        assert.equal(password, '0987')
+        const password = await getSpecificUserPassword('testUser1')
+        assert.equal(password, '$2b$12$LXvAfHtMdVnk.r6tEyUTQuW5Wwe1DayfxxZwE1dvBjl98Tnx7VwTa')
     })
 })
