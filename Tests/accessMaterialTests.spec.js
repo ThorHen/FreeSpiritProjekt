@@ -15,8 +15,8 @@ describe('Test of training form list', () => {
         assert.equal(trainingForms.length, 3)
     })
     it('Test get users training forms', async () => {
-        let userTrainingForms = await getUserTrainingForms('P1')
-        assert.equal(userTrainingForms.length, 2)
+        let userTrainingForms = await getUserTrainingForms('admin2')
+        assert.equal(userTrainingForms.length, 3)
     })
 })
 describe('Test of exercises', () => {

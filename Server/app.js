@@ -35,9 +35,13 @@ function isAdmin(req, res, next) {
     }
 }
 
+app.get('/', async (req, res) => {
+    res.redirect('/login');
+})
+
 app.get('/admin', isAdmin, async (req, res) => {
     const title = 'Admin';
-    const users = await AdminController.getUserNames();
+    const users = await AdminController.getUsernames();
     res.render('AdminPage', { users: users, title: title });
 })
 
@@ -53,13 +57,12 @@ app.get('/admin/redigerbruger/:id', isAdmin, async (req, res) => {
     const userData = await AdminController.getSpecificUserData(id)
     const trainingTypes = await MaterialController.getAllTrainingForms()
     const title = 'Rediger bruger: ' + id
-    // console.log(userData);
     req.session.updateUser = id;
     res.render('EditUser', { title: title, id: id, userData: userData, trainingTypes: trainingTypes })
 })
 
 app.post('/admin/redigerbruger/updateuser', isAdmin, async (req, res) => {
-    let id = req.body.id;
+    let oldusername = req.body.oldusername;
     let admin = req.body.admin;
     let name = req.body.name;
     let email = req.body.email;
@@ -76,7 +79,7 @@ app.post('/admin/redigerbruger/updateuser', isAdmin, async (req, res) => {
     if (req.body.hasOwnProperty('Instruktoer')) titles.push('Intruktoer');
     if (req.body.hasOwnProperty('Leder')) titles.push('Leder');
     if (req.body.hasOwnProperty('Rengoering')) titles.push('Rengoering');
-    await AdminController.editUserData(id, admin, email, name, permissions, titles, username)
+    await AdminController.editUserData(oldusername, admin, email, name, permissions, titles, username)
     res.redirect('/admin')
 })
 
@@ -107,14 +110,14 @@ app.get('/oevelse/:id', authenticateLoginStatus, async (req, res) => {
     res.render('Exercise', { exercise: exercise, title: id, trainingForm: trainingForm });
 })
 
-app.get('/opretBruger', isAdmin, async (req, res) => {
+app.get('/opretbruger', isAdmin, async (req, res) => {
     let trainingTypes = await MaterialController.getAllTrainingForms();
 
     res.render('CreateUser', { trainingTypes: trainingTypes })
     res.end();
 })
 
-app.post('/createNewUser', isAdmin, async (req, res) => {
+app.post('/createnewuser', isAdmin, async (req, res) => {
     console.log(req.body);
 
     let admin = req.body.admin;
@@ -138,7 +141,7 @@ app.post('/createNewUser', isAdmin, async (req, res) => {
     if (req.body.hasOwnProperty('Rengoering')) titles.push('Rengoering');
     if (password == repeatPassword) {
         userController.createNewUser(admin, name, email, username, password, permissions, titles);
-        res.send('Bruger oprettet');
+        res.redirect('/admin');
     }
     else {
         res.render('CreateUser', {trainingTypes: trainingForms, error: 'Password felterne stemmer ikke overens'})

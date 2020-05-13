@@ -8,6 +8,6 @@ body
       each element in users
         li= element
   .buttons
-    button(type='button' href='*' id='Opret') Opret bruger
+    button(type='button', onclick="window.location.href='/opretbruger'", id='Opret') Opret bruger
     button(type='button', onclick='editUser()', id='Rediger') Rediger bruger
     button(type='Button', onclick='deleteUser()', id='Slet') Slet Bruger

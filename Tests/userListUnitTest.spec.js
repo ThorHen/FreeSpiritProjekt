@@ -1,22 +1,22 @@
 const assert = require('chai').assert
-const { getUserNames } = require('../Controllers/AdminController')
+const { getUsernames } = require('../Controllers/AdminController')
 const {getSpecificUserPassword}=require('../Controllers/LoginController')
 
 let result = []
 before(async () => {
-    result = await getUserNames();
+    result = await getUsernames();
 })
 describe('Test of getting users from DB', () => {
-    it('Person1 exists in the database', () => {
-        assert.equal(result.includes('Person1'), true)
+    it('admin2 exists in the database', () => {
+        assert.equal(result.includes('admin2'), true)
     })
     it('Thor does not exist in the database', () => {
         assert.equal(result.includes('Thor'), false)
     })
     it('Returns specific names in DB', () => {
-        assert.equal(result.includes('Anna', 0), true)
-        assert.equal(result.includes('Person1', 1), true)
-        assert.equal(result.includes('Tester2', 2), false)
+        assert.equal(result.includes('admin2', 0), true)
+        assert.equal(result.includes('Thoreh', 1), true)
+        assert.equal(result.includes('testUser2', 2), false)
     })
 })
 describe('Test get user password', () => {

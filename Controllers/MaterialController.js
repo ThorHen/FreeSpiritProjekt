@@ -58,16 +58,16 @@ async function getTrainingExercises(trainingForm) {
 }
 
 async function getExerciseInfo(exercise) {
-    const exerciseSnapshot = await dbController.getExerciseInfo(exercise)
-    if (exerciseSnapshot.empty) {
+    const exerciseInfo = await dbController.getExerciseInfo(exercise)
+    if (!exerciseInfo) {
         return
     } else {
         let result = []
-        result.push(exerciseSnapshot.docs[0].data().Description)
-        result.push(exerciseSnapshot.docs[0].data().Links)
-        result.push(exerciseSnapshot.docs[0].data().Name)
-        result.push(exerciseSnapshot.docs[0].data().Tags)
-        result.push(exerciseSnapshot.docs[0].data().YoutubeEmbed)
+        result.push(exerciseInfo.Description)
+        result.push(exerciseInfo.Links)
+        result.push(exerciseInfo.Name)
+        result.push(exerciseInfo.Tags)
+        result.push(exerciseInfo.YoutubeEmbed)
 
         return result
     }
