@@ -60,3 +60,6 @@ exports.getExerciseInfo = async (exercise) => {
 exports.getExercisesByTag = async (tag) => {
     return snapshot = await db.collection('Exercises').get()
 }
+exports.editUser = async (userId, data) => {
+    db.collection('Users').doc(userId).update(data)
+}

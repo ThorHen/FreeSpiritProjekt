@@ -13,11 +13,10 @@ describe('Test of getting users from DB', () => {
     it('Thor does not exist in the database', () => {
         assert.equal(result.includes('Thor'), false)
     })
-    it('Returns all names in DB', () => {
+    it('Returns specific names in DB', () => {
         assert.equal(result.includes('Anna', 0), true)
         assert.equal(result.includes('Person1', 1), true)
-        assert.equal(result.includes('Tester2', 2), true)
-        assert.equal(result.length, 3)
+        assert.equal(result.includes('Tester2', 2), false)
     })
 })
 describe('Test get user password', () => {

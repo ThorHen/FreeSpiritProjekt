@@ -5,7 +5,9 @@
     position: relative;
 
   }
-  
+  body{
+    background-color:#fabdbd ;
+  }
   /* Hide the links inside the navigation menu (except for logo/home) */
   .topnav #myLinks {
     display: none;
@@ -38,6 +40,6 @@
   
   /* Style the active link (or home/logo) */
   .active {
-    background-color: #fabdbd;
+    background-color: #4CAF50;
     color: white;
   }

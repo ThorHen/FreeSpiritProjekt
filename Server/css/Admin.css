@@ -10,6 +10,7 @@
     overflow-y: scroll;
     border-style: solid;
     display: grid;
+    padding-top: 8px;
 }
 .buttons {
     text-align: center;
@@ -21,5 +22,5 @@
     text-align: center;
 }
 .selected{
-    background: #fabdbd;
+    background: #4CAF50;
 }

@@ -1,0 +1,41 @@
+include header
+  include ../css/EditUser.css
+body
+  include burger
+  .updateUser
+    h1 Rediger #{id}
+    form(action="updateuser" method="post")
+        input(type='hidden' name='id' value=id)
+        .admin
+            p Admin:
+            if userData[0]==0
+              input(type="radio" id="false" name="admin" value="0" required checked) 
+              label(for="false") False
+              input(type="radio" id="true" name="admin", value="1")
+              label(for="true") True
+            else
+              input(type="radio" id="false" name="admin" value="0" required) 
+              label(for="false") False
+              input(type="radio" id="true" name="admin", value="1" checked)
+              label(for="true") True
+        label Navn
+        input(type="text" name="name"  value=userData[2] required)
+        label Email
+        input(type="text" name="email" value=userData[1] )
+        label Brugernavn
+        input(type="text" name="username" value=userData[5] required)
+        .permissions
+            p Adgangstilladelser:
+            each element in trainingTypes
+              input(type="checkbox" id=element name=element value=element)
+              label(for=element) #{element}     
+        .title
+            p Stillinger: 
+            input(type="checkbox" id="Leder" name="Leder" value="Leder")
+            label(for="Leder") Leder
+            input(type="checkbox" id="Instruktoer" name="Instruktoer" value="Instruktoer")
+            label(for="Instruktoer") Instruktør
+            input(type="checkbox" id="Rengoering" name="Rengoering" value="Rengoering")
+            label(for="Rengoering") Rengøring
+
+        input(type="submit" value="Godkend ændringer")
