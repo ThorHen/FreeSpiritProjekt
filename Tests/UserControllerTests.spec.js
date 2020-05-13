@@ -1,6 +1,7 @@
 //Setup of testing environment
 const {assert, expect} = require('chai');
 const {createNewUser, getUserType} = require('../Controllers/UserController');
+const { deleteUser } = require('../Controllers/AdminController');
 
 describe('Test suite for UserController', () => {
 
@@ -43,7 +44,7 @@ describe('Test suite for UserController', () => {
         })
 
         after(() => {
-            //delete returnedUser from db
+            deleteUser(returnedUser.username);
         })
     })
 

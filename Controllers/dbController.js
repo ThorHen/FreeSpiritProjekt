@@ -54,12 +54,13 @@ async function getTrainingExercises(trainingForm) {
 }
 
 async function getExerciseInfo(exercise) {
-    return exerciseSnapshot = await db.collection('Exercises')
+    let exerciseSnapshot = await db.collection('Exercises')
         .where('Name', '==', exercise).get()
+    return exerciseSnapshot.docs[0].data(); 
 }
 
 async function editUser(userId, data) {
-    db.collection('Users').doc(userId).update(data)
+    await db.collection('Users').doc(userId).update(data)
 }
 
 module.exports = { getUsers, getUser, getAllTrainingForms, getAllExercises, getTrainingExercises, getExerciseInfo, createUser, editUser, getUserDocumentID, deleteUser }

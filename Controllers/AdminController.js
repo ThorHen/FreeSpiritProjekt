@@ -24,7 +24,7 @@ async function getSpecificUserData(user) {
         specificUser.push(returnedUser.email)
         specificUser.push(returnedUser.name)
         specificUser.push(returnedUser.permissions)
-        specificUser.push(returnedUser.titel)
+        specificUser.push(returnedUser.titles)
         specificUser.push(returnedUser.username)
         return specificUser
     }
@@ -40,15 +40,15 @@ async function editUserData(oldusername, admin, email, name, permissions, titles
         titles: titles,
         username: username
     }
-    dbController.editUser(docId, data)
+    await dbController.editUser(docId, data)
 }
 
-async function deleteUser(user) {
-    if (!user) {
+async function deleteUser(username) {
+    if (!username) {
         return
     } else {
-        let id = await dbController.getUserDocumentID(user)
-        await dbController.deleteUser(id)
+        let docid = await dbController.getUserDocumentID(username)
+        await dbController.deleteUser(docid)
     }
 }
 module.exports = { getUsernames, deleteUser, getSpecificUserData, editUserData }
