@@ -1,14 +1,7 @@
-.login-form {
-    width: 300px;
-    margin: 0 auto;
+body {
     font-family: Tahoma, Geneva, sans-serif;
 }
-.login-form h1 {
-    text-align: center;
-    color: #4d4d4d;
-    font-size: 24px;
-    padding: 20px 0 20px 0;
-}
+
 form input[type="password"],
 form input[type="text"] {
     width: 100%;
@@ -27,6 +20,28 @@ form input[type="submit"] {
     font-weight: bold;
     color: #ffffff;
 }
+.admin {
+    height: fit-content;
+    padding-bottom: 10px;
+}
+form input[type="radio"] {
+    size: 15%;
+    padding: 15px;
+}
+
+form label {
+    padding-right: 20px;
+}
+
+.permissions {
+    height: fit-content;
+}
+
+input[type="checkbox"] {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 .alert {
     padding: 2px;
     background-color: #f44336;

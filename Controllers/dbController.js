@@ -8,44 +8,43 @@ admin.initializeApp({
 // DB setup
 const db = admin.firestore();
 
-exports.getUserNames = async () => {
+async function getUserNames() {
     return snapshot = await db.collection('Users').get()
 }
 
-exports.getSpecificUserPassword = async (userName) => {
-    const snapshot = await db.collection('Users')
-        .where('Username', '==', userName).get();
-    if (snapshot.empty) {
-        return;
-    } else {
-        const hashedPassword = snapshot.docs[0].data().Password
-        return hashedPassword;
-    }
+async function getUser(username) {
+    let snapshot = await db.collection('Users')
+    .where('username', '==', username).get();
+
+    let user = snapshot.docs[0].data();
+    return user;
 }
 
-exports.getUserPermissions = async (userName) => {
-    return userPermissions = await db.collection('Users')
-        .where('Username', '==', userName).get();
+async function createUser(admin, name, email, username, hashedPassword, permissions, titles) {
+    let newUser = {admin: admin, name: name, email: email, username: username, 
+        hashObj: hashedPassword, permissions: permissions, titles: titles}
+
+    db.collection('Users').add(newUser);
+
+    return newUser;
 }
 
-exports.getAllTrainingForms = async () => {
+async function getAllTrainingForms() {
     return trainingForms = await db.collection('TrainingForms').get()
 }
 
-exports.getAllExercises = async () => {
+async function getAllExercises() {
     return exercises = await db.collection('Exercises').get()
 }
 
-exports.getTrainingExercises = async (trainingForm) => {
+async function getTrainingExercises(trainingForm) {
     return trainingFormExercises = await db.collection('TrainingForms')
         .where('Name', '==', trainingForm).get()
 }
 
-exports.getExerciseInfo = async (exercise) => {
+async function getExerciseInfo(exercise) {
     return exerciseSnapshot = await db.collection('Exercises')
         .where('Name', '==', exercise).get()
 }
 
-exports.getExercisesByTag = async (tag) => {
-    return snapshot = await db.collection('Exercises').get()
-}
+module.exports = { getUserNames, getUser, getAllTrainingForms, getAllExercises, getTrainingExercises, getExerciseInfo, createUser }

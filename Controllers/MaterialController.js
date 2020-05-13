@@ -1,20 +1,14 @@
-const dbController = require('../Controllers/dbController')
+const dbController = require('./dbController');
+const userController = require('./UserController');
 
-async function getUserPermissions(userName) {
-    const userPermissions = await dbController.getUserPermissions(userName)
-    if (userPermissions.empty) {
-        return;
-    } else {
-        return userPermissions.docs[0].data().Permissions;
-    }
-}
+
 
 async function getAllTrainingForms() {
     const trainingForms = await dbController.getAllTrainingForms()
     if (trainingForms.empty) {
-        return
+        return;
     } else {
-        let forms = []
+        let forms = [];
         trainingForms.forEach(element => {
             forms.push(element.data().Name)
         });
@@ -22,9 +16,10 @@ async function getAllTrainingForms() {
     }
 }
 async function getUserTrainingForms(user) {
-    const userPermissions = await getUserPermissions(user)
-    const trainingForms = await getAllTrainingForms()
-    if (userPermissions.empty || trainingForms.empty) {
+    const userType = await userController.getUserType(user)
+    const userPermissions = userType.permissions;
+    const trainingForms = await getAllTrainingForms();
+    if (userPermissions.length === 0 || trainingForms.empty) {
         return
     } else {
         let result = []
@@ -79,7 +74,7 @@ async function getExerciseInfo(exercise) {
 }
 
 async function getExercisesByTag(tag) {
-    const snapshot = await dbController.getExercisesByTag(tag)
+    const snapshot = await dbController.getAllExercises();
     if (snapshot.empty) {
         return
     } else {
@@ -114,6 +109,6 @@ async function getExercisesByTrainingformAndTag(trainingform, tag) {
     }
 }
 module.exports = {
-    getUserPermissions, getAllTrainingForms, getUserTrainingForms, getAllExercises,
+    getAllTrainingForms, getUserTrainingForms, getAllExercises,
     getTrainingExercises, getExerciseInfo, getExercisesByTag, getExercisesByTrainingformAndTag
 }

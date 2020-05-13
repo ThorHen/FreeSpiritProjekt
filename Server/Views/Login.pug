@@ -4,14 +4,14 @@ html
     meta(charset="utf-8")
     title Login
     style
-      include ../DummyThiccAssets/styles.css
+      include ../css/Login.css
   body
     .login-form
-      h1 Login Form
+      h1 Login
       form(action="auth" method="POST")
         input(type="text" name="username" placeholder="Username" required)
         input(type="password" name="password" placeholder="Password" required)
-        input(type="submit" name="Log ind")
+        input(type="submit" value="Log ind")
 
         if error
             .alert
