@@ -10,6 +10,7 @@
     overflow-y: scroll;
     border-style: solid;
     display: grid;
+    padding-top: 8px;
 }
 .buttons {
     text-align: center;
@@ -19,4 +20,7 @@
 }
 .users h4{
     text-align: center;
+}
+.selected{
+    background: #4CAF50;
 }

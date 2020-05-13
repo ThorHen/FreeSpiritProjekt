@@ -41,6 +41,45 @@ app.get('/admin', isAdmin, async (req, res) => {
     res.render('AdminPage', { users: users, title: title });
 })
 
+app.post('/admin/slet/:id', isAdmin, async (req, res) => {
+    const id = req.params.id
+    console.log(id);
+    await AdminController.deleteUser(id)
+    res.redirect('/admin')
+})
+
+app.get('/admin/redigerbruger/:id', isAdmin, async (req, res) => {
+    const id = req.params.id
+    const userData = await AdminController.getSpecificUserData(id)
+    const trainingTypes = await MaterialController.getAllTrainingForms()
+    const title = 'Rediger bruger: ' + id
+    // console.log(userData);
+    req.session.updateUser = id;
+    res.render('EditUser', { title: title, id: id, userData: userData, trainingTypes: trainingTypes })
+})
+
+app.post('/admin/redigerbruger/updateuser', isAdmin, async (req, res) => {
+    let id = req.body.id;
+    let admin = req.body.admin;
+    let name = req.body.name;
+    let email = req.body.email;
+    let username = req.body.username;
+    let permissions = [];
+    let titles = [];
+
+    let trainingForms = await MaterialController.getAllTrainingForms();
+    for (tf of trainingForms) {
+        if (req.body.hasOwnProperty(tf)) {
+            permissions.push(tf);
+        }
+    }
+    if (req.body.hasOwnProperty('Instruktoer')) titles.push('Intruktoer');
+    if (req.body.hasOwnProperty('Leder')) titles.push('Leder');
+    if (req.body.hasOwnProperty('Rengoering')) titles.push('Rengoering');
+    await AdminController.editUserData(id, admin, email, name, permissions, titles, username)
+    res.redirect('/admin')
+})
+
 app.get('/traeningsformer', authenticateLoginStatus, async (req, res) => {
     const title = 'Traeningsformer';
     const trainingforms = await MaterialController.getAllTrainingForms();

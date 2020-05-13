@@ -11,6 +11,17 @@ const db = admin.firestore();
 async function getUserNames() {
     return snapshot = await db.collection('Users').get()
 }
+exports.getUserDocumentID = async (user) => {
+    const snapshot = await db.collection('Users').where('Name', '==', user).get()
+    if (snapshot.empty) {
+        return
+    } else {
+        return snapshot.docs[0].id
+    }
+}
+exports.deleteUser = async (id) => {
+    await db.collection('Users').doc(id).delete();
+}
 
 async function getUser(username) {
     let snapshot = await db.collection('Users')
@@ -47,4 +58,8 @@ async function getExerciseInfo(exercise) {
         .where('Name', '==', exercise).get()
 }
 
-module.exports = { getUserNames, getUser, getAllTrainingForms, getAllExercises, getTrainingExercises, getExerciseInfo, createUser }
+async function editUser(userId, data) {
+    db.collection('Users').doc(userId).update(data)
+}
+
+module.exports = { getUserNames, getUser, getAllTrainingForms, getAllExercises, getTrainingExercises, getExerciseInfo, createUser, editUser }
