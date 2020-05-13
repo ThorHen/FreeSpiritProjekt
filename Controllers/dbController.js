@@ -8,18 +8,18 @@ admin.initializeApp({
 // DB setup
 const db = admin.firestore();
 
-async function getUserNames() {
+async function getUsers() {
     return snapshot = await db.collection('Users').get()
 }
-exports.getUserDocumentID = async (user) => {
-    const snapshot = await db.collection('Users').where('Name', '==', user).get()
+async function getUserDocumentID(user){
+    const snapshot = await db.collection('Users').where('username', '==', user).get()
     if (snapshot.empty) {
         return
     } else {
         return snapshot.docs[0].id
     }
 }
-exports.deleteUser = async (id) => {
+async function deleteUser(id){
     await db.collection('Users').doc(id).delete();
 }
 
@@ -62,4 +62,4 @@ async function editUser(userId, data) {
     db.collection('Users').doc(userId).update(data)
 }
 
-module.exports = { getUserNames, getUser, getAllTrainingForms, getAllExercises, getTrainingExercises, getExerciseInfo, createUser, editUser }
+module.exports = { getUsers, getUser, getAllTrainingForms, getAllExercises, getTrainingExercises, getExerciseInfo, createUser, editUser, getUserDocumentID, deleteUser }

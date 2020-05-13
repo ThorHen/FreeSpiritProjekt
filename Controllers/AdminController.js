@@ -1,13 +1,13 @@
 const dbController = require('./dbController')
 
-async function getUserNames() {
-    const snapshot = await dbController.getUserNames()
+async function getUsernames() {
+    const snapshot = await dbController.getUsers()
     if (snapshot.empty) {
         return;
     } else {
         let result = [];
         snapshot.forEach(element => {
-            result.push(element.data().Name);
+            result.push(element.data().username);
         });
         result.sort()
         return result
@@ -15,36 +15,32 @@ async function getUserNames() {
 
 }
 async function getSpecificUserData(user) {
-    const snapshot = await dbController.getUserNames()
-    if (snapshot.empty) {
+    const returnedUser = await dbController.getUser(user)
+    if (!returnedUser) {
         return
     } else {
         let specificUser = []
-        snapshot.forEach(element => {
-            if (element.data().Name == user) {
-                specificUser.push(element.data().Admin)
-                specificUser.push(element.data().Email)
-                specificUser.push(element.data().Name)
-                specificUser.push(element.data().Permissions)
-                specificUser.push(element.data().Titel)
-                specificUser.push(element.data().Username)
-            }
-        })
+        specificUser.push(returnedUser.admin)
+        specificUser.push(returnedUser.email)
+        specificUser.push(returnedUser.name)
+        specificUser.push(returnedUser.permissions)
+        specificUser.push(returnedUser.titel)
+        specificUser.push(returnedUser.username)
         return specificUser
     }
 }
 
-async function editUserData(user, admin, email, name, permissions, titel, username) {
-    userId = await dbController.getUserDocumentID(user)
+async function editUserData(oldusername, admin, email, name, permissions, titles, username) {
+    let docId = await dbController.getUserDocumentID(oldusername)
     let data = {
-        Admin: admin,
-        Email: email,
-        Name: name,
-        Permissions: permissions,
-        Titel: titel,
-        Username: username
+        admin: admin,
+        email: email,
+        name: name,
+        permissions: permissions,
+        titles: titles,
+        username: username
     }
-    dbController.editUser(userId, data)
+    dbController.editUser(docId, data)
 }
 
 async function deleteUser(user) {
@@ -55,4 +51,4 @@ async function deleteUser(user) {
         await dbController.deleteUser(id)
     }
 }
-module.exports = { getUserNames, deleteUser, getSpecificUserData, editUserData }
+module.exports = { getUsernames, deleteUser, getSpecificUserData, editUserData }
