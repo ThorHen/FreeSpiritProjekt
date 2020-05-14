@@ -1,8 +1,9 @@
 const dbController = require('./dbController');
 const userController = require('./UserController');
 
-
-
+/**
+ * @returns name of all trainingforms
+ */
 async function getAllTrainingForms() {
     const trainingForms = await dbController.getAllTrainingForms()
     if (trainingForms.empty) {
@@ -15,6 +16,11 @@ async function getAllTrainingForms() {
         return forms
     }
 }
+
+/**
+ * @returns all trainingforms that a given user has access to
+ * @param {object} user 
+ */
 async function getUserTrainingForms(user) {
     const userType = await userController.getUserType(user)
     const userPermissions = userType.permissions;
@@ -32,6 +38,9 @@ async function getUserTrainingForms(user) {
     }
 }
 
+/**
+ * @returns name of all exercises
+ */
 async function getAllExercises() {
     const exercises = await dbController.getAllExercises()
     if (exercises.empty) {
@@ -45,6 +54,10 @@ async function getAllExercises() {
     }
 }
 
+/**
+ * @returns all exercises belonging to a given trainingform
+ * @param {object} trainingForm 
+ */
 async function getTrainingExercises(trainingForm) {
     const trainingFormExercises = await dbController.getTrainingExercises(trainingForm)
     if (trainingFormExercises.empty) {
@@ -57,6 +70,10 @@ async function getTrainingExercises(trainingForm) {
     }
 }
 
+/**
+ * @returns all information on a given exercise
+ * @param {object} exercise 
+ */
 async function getExerciseInfo(exercise) {
     const exerciseInfo = await dbController.getExerciseInfo(exercise)
     if (!exerciseInfo) {
@@ -68,11 +85,14 @@ async function getExerciseInfo(exercise) {
         result.push(exerciseInfo.Name)
         result.push(exerciseInfo.Tags)
         result.push(exerciseInfo.YoutubeEmbed)
-
         return result
     }
 }
 
+/**
+ * @returns exercises belonging to a given tag
+ * @param {object} tag 
+ */
 async function getExercisesByTag(tag) {
     const snapshot = await dbController.getAllExercises();
     if (snapshot.empty) {
@@ -89,10 +109,14 @@ async function getExercisesByTag(tag) {
     }
 }
 
+/**
+ * @returns exercises belonging to a given trainingform and a given tag
+ * @param {object} trainingform 
+ * @param {object} tag 
+ */
 async function getExercisesByTrainingformAndTag(trainingform, tag) {
     const trainingFormExercises = await getTrainingExercises(trainingform)
     const exercisesByTag = await getExercisesByTag(tag)
-
     if (trainingFormExercises.empty || exercisesByTag.empty) {
         return
     } else {
@@ -108,7 +132,7 @@ async function getExercisesByTrainingformAndTag(trainingform, tag) {
         return result
     }
 }
-module.exports = {
-    getAllTrainingForms, getUserTrainingForms, getAllExercises,
-    getTrainingExercises, getExerciseInfo, getExercisesByTag, getExercisesByTrainingformAndTag
-}
+
+// export all functions
+
+module.exports = { getAllTrainingForms, getUserTrainingForms, getAllExercises, getTrainingExercises, getExerciseInfo, getExercisesByTag, getExercisesByTrainingformAndTag }
