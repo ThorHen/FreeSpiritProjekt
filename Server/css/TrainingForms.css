@@ -5,6 +5,7 @@
     row-gap: 50px;
     padding-top: 8px;
 }
+
 .center {
     display: grid;
     margin-left: auto;
@@ -13,6 +14,7 @@
     height: 100px;
     position: relative;
 }
+
 .title{
     text-align: center;
   }
