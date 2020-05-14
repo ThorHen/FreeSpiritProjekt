@@ -1,4 +1,4 @@
-const dbController = require('./dbController');
+const dbController = require('./DBController');
 const loginController = require('./LoginController');
 
 async function createNewUser(admin, name, email, username, password, permissions, title) {

@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const dbController = require('./dbController');
+const dbController = require('./DBController');
 
 const saltRounds = 12;
 /**
