@@ -3,21 +3,19 @@ const assert = require('chai').assert;
 const expect = require('chai').expect;
 const bcrypt = require('bcrypt');
 
-//Methods to test
-
-const saltAndHashPassword = require('../Controllers/LoginController').saltAndHashPassword;
-const comparePassword = require('../Controllers/LoginController').comparePassword;
-const login = require('../Controllers/LoginController').login;
+//Functions to test
+const {saltAndHashPassword, comparePassword, login} = require('../Controllers/LoginController');
 
 describe('Test suite for Login functionalities', () => {
     const plaintextPassword = '123password';
     let hashObj;
 
+    //Create hashObj to test with from given plaintext password
     before(async () => {
         hashObj = await saltAndHashPassword(plaintextPassword);
     })
 
-    describe('Test suite for saltAndHashPassword', () => {
+    describe('Test suite for saltAndHashPassword(plaintextPassword)', () => {
         it('Assert whether hashObj (promise) exists', () => {
             assert.isDefined(hashObj);
         })
@@ -31,7 +29,7 @@ describe('Test suite for Login functionalities', () => {
         })
     })
 
-    describe('Test suite for comparePassword', () => {
+    describe('Test suite for comparePassword(plaintextPassword, hashedPassword)', () => {
 
         it('Assert that correct plaintext password returns true', async () => {
             const isCorrectPass = await comparePassword(plaintextPassword, hashObj.hashedPassword);
@@ -49,9 +47,7 @@ describe('Test suite for Login functionalities', () => {
         });
     })
 
-    //TODO think of more tests when DBController
-    describe('Test suite for login', () => {
-
+    describe('Test suite for login(username, plaintextPassword)', () => {
         it('should assert true with valid password', async () => {
             const validLogin = await login('testUser1', plaintextPassword);
             assert.isTrue(validLogin);
