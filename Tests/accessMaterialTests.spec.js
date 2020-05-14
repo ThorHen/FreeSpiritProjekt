@@ -1,50 +1,59 @@
-const assert = require('chai').assert
+const assert = require('chai').assert;
+
+//Methods to be tested in this file.
 const { getAllTrainingForms, getUserTrainingForms,
     getAllExercises, getTrainingExercises, getExerciseInfo,
-    getExercisesByTrainingformAndTag } = require('../Controllers/MaterialController')
+    getExercisesByTrainingformAndTag } = require('../Controllers/MaterialController');
+
+let exercise;
 
 before(async () => {
     exercise = await getExerciseInfo('Downward facing dog')
 })
-describe('Test of training form list', () => {
-    it('Test show all training forms', async () => {
+
+describe('Test suite of training form list', () => {
+    it('Test of getAllTrainingForms()', async () => {
         let trainingForms = await getAllTrainingForms()
         assert.equal(trainingForms.includes('Barre'), true)
         assert.equal(trainingForms.includes('Yoga'), true)
         assert.equal(trainingForms.includes('Reformer'), true)
+        //Only true as long as there only exists three training forms in DB. For development purposes
         assert.equal(trainingForms.length, 3)
     })
-    it('Test get users training forms', async () => {
+    it('Test of getUserTrainingForms', async () => {
         let userTrainingForms = await getUserTrainingForms('admin2')
         assert.equal(userTrainingForms.length, 3)
     })
 })
-describe('Test of exercises', () => {
-    it('Test of get all exercises', async () => {
+describe('Test of execercise methods', () => {
+    it('Test of getAllExcercises()', async () => {
         const exercises = await getAllExercises()
         assert.equal(exercises.includes('Downward facing dog'), true)
         assert.equal(exercises.includes('Kriger2'), true)
         assert.equal(exercises.length, 2)
     })
-    it('Test get exercises from training form', async () => {
+    it('Test of getTrainingExercises(trainingForm)', async () => {
         const trainingExercises = await getTrainingExercises('Yoga')
         assert.equal(trainingExercises.includes('Øvelse2'), true)
         assert.equal(trainingExercises.includes('Downward facing dog'), true)
+        //Only true as long as DB collection 'Exercises' only contains two exercises. For development testing.
         assert.equal(trainingExercises.length, 2)
     })
-    it('Test get exercises by tag opvarmning', async () => {
+    it('Test of getExercisesByTrainingFormAndTag(trainingForm, tag)', async () => {
         const exercises = await getExercisesByTrainingformAndTag('Reformer', 'Opvarmning')
         assert.equal(exercises.includes('Downward facing dog'), true)
         assert.equal(exercises.includes('Kriger2'), true)
+        //Only true as long as DB collection 'Exercises' only contains two exercises with 'Opvarmning' tag. For development testing.
         assert.equal(exercises.length, 2)
     })
-    it('Test get exercises by tag nedkøling', async () => {
+    it('Test of getExercisesByTrainingformAndTag(trainingForm, tag', async () => {
         const exercises = await getExercisesByTrainingformAndTag('Reformer', 'Nedkøling')
         assert.equal(exercises.includes('Downward facing dog'), true)
+        //Only true as long as DB collection 'Exercises' only contains one exercise with 'Nedkøling' tag. For development testing.
         assert.equal(exercises.length, 1)
     })
 })
-describe('Test of get 1 exercise', () => {
+describe('Test of getExerciseInfo(exercise)', () => {
     it('Test get name of exercise', () => {
         assert.equal(exercise.includes('Downward facing dog'), true)
     })
