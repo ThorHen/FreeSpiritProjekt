@@ -1,3 +1,5 @@
+/** Documentation written by John Høeg */
+/** Function to show Burgermenu. */
 function showMenu() {
   const x = document.getElementById('myLinks');
   if (x.style.display === 'block') {
