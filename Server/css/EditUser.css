@@ -10,6 +10,7 @@ form input[type="text"] {
     margin-bottom: 15px;
     box-sizing:border-box;
 }
+
 form input[type="submit"] {
     width: 100%;
     padding: 15px;
@@ -20,10 +21,12 @@ form input[type="submit"] {
     font-weight: bold;
     color: #ffffff;
 }
+
 .admin {
     height: fit-content;
     padding-bottom: 10px;
 }
+
 form input[type="radio"] {
     size: 15%;
     padding: 15px;
@@ -36,9 +39,7 @@ form label {
 .permissions {
     padding-bottom: 15px;
 }
+
 .title{
     padding-bottom: 15px;
-}
-input[type="checkbox"] {
-
 }

@@ -15,7 +15,7 @@ describe('Test suite for UserController', () => {
             assert.isDefined(returnedUser);
         })
 
-        it('should have correct admin', () => {
+        it('should have correct admin status', () => {
             assert.equal(returnedUser.admin, '1');
         })
 

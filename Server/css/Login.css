@@ -5,6 +5,7 @@
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 32px;
 }
+
 form input[type="password"],
 form input[type="text"] {
     width: 100%;
@@ -14,6 +15,7 @@ form input[type="text"] {
     box-sizing:border-box;
     font-size: 48px;
 }
+
 form input[type="submit"] {
     width: 100%;
     padding: 32px;
@@ -25,6 +27,7 @@ form input[type="submit"] {
     color: #ffffff;
     font-size: 48px;
 }
+
 .alert {
     padding: 2px;
     background-color: #f44336;
