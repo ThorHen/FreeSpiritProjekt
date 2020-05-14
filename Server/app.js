@@ -47,7 +47,6 @@ app.get('/admin', isAdmin, async (req, res) => {
 
 app.post('/admin/slet/:id', isAdmin, async (req, res) => {
     const id = req.params.id
-    console.log(id);
     await AdminController.deleteUser(id)
     res.redirect('/admin')
 })
@@ -84,8 +83,9 @@ app.post('/admin/redigerbruger/updateuser', isAdmin, async (req, res) => {
 })
 
 app.get('/traeningsformer', authenticateLoginStatus, async (req, res) => {
+    let username = req.session.username;
     const title = 'Traeningsformer';
-    const trainingforms = await MaterialController.getAllTrainingForms();
+    const trainingforms = await MaterialController.getUserTrainingForms(username);
     res.render('TrainingForms', { trainingforms: trainingforms, title: title });
 })
 
@@ -118,8 +118,6 @@ app.get('/opretbruger', isAdmin, async (req, res) => {
 })
 
 app.post('/createnewuser', isAdmin, async (req, res) => {
-    console.log(req.body);
-
     let admin = req.body.admin;
     let name = req.body.name;
     let email = req.body.email;
@@ -134,7 +132,6 @@ app.post('/createnewuser', isAdmin, async (req, res) => {
             permissions.push(tf);
         }
     }
-
     let titles = [];
     if (req.body.hasOwnProperty('Instruktoer')) titles.push('Intruktoer');
     if (req.body.hasOwnProperty('Leder')) titles.push('Leder');
@@ -146,7 +143,6 @@ app.post('/createnewuser', isAdmin, async (req, res) => {
     else {
         res.render('CreateUser', {trainingTypes: trainingForms, error: 'Password felterne stemmer ikke overens'})
     }
-
     res.end()
 })
 

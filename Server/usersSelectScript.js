@@ -7,7 +7,6 @@ document.querySelector('ul').addEventListener('click', async function (event) {
         }
         event.target.className = 'selected'
     }
-    console.log(selected.textContent);
 })
 
 async function deleteUser() {
