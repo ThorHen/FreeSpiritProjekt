@@ -46,7 +46,7 @@ async function getAllExercises() {
 }
 
 async function getTrainingExercises(trainingForm) {
-    const trainingFormExercises = await dbController.getTrainingExercises(trainingForm)
+    const trainingFormExercises = await dbController.getTrainingform(trainingForm)
     if (trainingFormExercises.empty) {
         return
     } else {
@@ -90,7 +90,7 @@ async function getExercisesByTag(tag) {
 }
 
 async function getExercisesByTrainingformAndTag(trainingform, tag) {
-    const trainingFormExercises = await getTrainingExercises(trainingform)
+    const trainingFormExercises = await getTrainingform(trainingform)
     const exercisesByTag = await getExercisesByTag(tag)
 
     if (trainingFormExercises.empty || exercisesByTag.empty) {
