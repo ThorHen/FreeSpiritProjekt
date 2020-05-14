@@ -1,5 +1,7 @@
+/** Documentation written by John Høeg */
+/** Initialising connection to Database Controller. */
 const dbController = require('./dbController')
-
+/** Function to get all user by username. */
 async function getUsernames() {
     const snapshot = await dbController.getUsers()
     if (snapshot.empty) {
@@ -14,6 +16,10 @@ async function getUsernames() {
     }
 
 }
+/**
+ * Function to get a specific user by supplying username.
+ * @param {String} user - Username
+ */
 async function getSpecificUserData(user) {
     const returnedUser = await dbController.getUser(user)
     if (!returnedUser) {
@@ -29,7 +35,16 @@ async function getSpecificUserData(user) {
         return specificUser
     }
 }
-
+/**
+ * Function to edit a chosen user with new values.
+ * @param {String} oldusername - Username
+ * @param {String} admin - 1 or 0
+ * @param {String} email - Email
+ * @param {String} name - Users name
+ * @param {Array} permissions - Traningforms allowed to view.
+ * @param {Array} titles - Associated titles.
+ * @param {String} username - Username
+ */
 async function editUserData(oldusername, admin, email, name, permissions, titles, username) {
     let docId = await dbController.getUserDocumentID(oldusername)
     let data = {
@@ -42,7 +57,10 @@ async function editUserData(oldusername, admin, email, name, permissions, titles
     }
     await dbController.editUser(docId, data)
 }
-
+/**
+ * Function to delete a chosen user by username.
+ * @param {String} username - Username
+ */
 async function deleteUser(username) {
     if (!username) {
         return
@@ -51,4 +69,5 @@ async function deleteUser(username) {
         await dbController.deleteUser(docid)
     }
 }
+/** Exporting all functions to be used other places. */
 module.exports = { getUsernames, deleteUser, getSpecificUserData, editUserData }
