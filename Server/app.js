@@ -35,7 +35,7 @@ function isAdmin(req, res, next) {
         res.send('Du har ikke admin privilegier');
     }
 }
-/** Redirecter to login page from root. */
+/** Redirecting to login page from root. */
 app.get('/', async (req, res) => {
     res.redirect('/login');
 })
@@ -45,7 +45,7 @@ app.get('/admin', isAdmin, async (req, res) => {
     const users = await AdminController.getUsernames();
     res.render('AdminPage', { users: users, title: title });
 })
-/** Deleteing a chosen user.
+/** Deleting a chosen user.
  * @param id = Username
  */
 app.post('/admin/slet/:id', isAdmin, async (req, res) => {
@@ -54,7 +54,7 @@ app.post('/admin/slet/:id', isAdmin, async (req, res) => {
     res.redirect('/admin')
 })
 /** 
- * Displaying editing page for a chosen user.
+ * Displays editing page for a chosen user.
  * @param id = Username
  */
 app.get('/admin/redigerbruger/:id', isAdmin, async (req, res) => {
@@ -87,7 +87,7 @@ app.post('/admin/redigerbruger/updateuser', isAdmin, async (req, res) => {
     await AdminController.editUserData(oldusername, admin, email, name, permissions, titles, username)
     res.redirect('/admin')
 })
-/** Displaying trainingforms page with all trainingforms associated with logged in user. */
+/** Displays trainingforms page with all trainingforms associated with logged in user. */
 app.get('/traeningsformer', authenticateLoginStatus, async (req, res) => {
     let username = req.session.username;
     const title = 'Traeningsformer';
@@ -95,7 +95,7 @@ app.get('/traeningsformer', authenticateLoginStatus, async (req, res) => {
     res.render('TrainingForms', { trainingforms: trainingforms, title: title });
 })
 /**
- * Displaying Exercise list page with chosen trainingform and tag.
+ * Displays Exercise list page with chosen trainingform and tag.
  * @param tf = Trainingforms
  * @param tag = Tags
  */
@@ -113,7 +113,7 @@ app.get('/oevelser/:tf/:tag', authenticateLoginStatus, async (req, res) => {
     res.render('Exercises', { exercises: exercises, title: title });
 })
 /** 
- * Displaying a specific Exercise.
+ * Displays a specific Exercise.
  * @param oevelsesNavn = Øvelses navn
  */
 app.get('/oevelse/:oevelsesNavn', authenticateLoginStatus, async (req, res) => {
@@ -122,7 +122,7 @@ app.get('/oevelse/:oevelsesNavn', authenticateLoginStatus, async (req, res) => {
     const exercise = await MaterialController.getExerciseInfo(oevelsesNavn);
     res.render('Exercise', { exercise: exercise, title: oevelsesNavn, trainingForm: trainingForm });
 })
-/** Displaying the create user page. */
+/** Displays the create user page. */
 app.get('/opretbruger', isAdmin, async (req, res) => {
     let trainingTypes = await MaterialController.getAllTrainingForms();
     res.render('CreateUser', { trainingTypes: trainingTypes })
@@ -157,7 +157,7 @@ app.post('/createnewuser', isAdmin, async (req, res) => {
     }
     res.end()
 })
-/** Displaying login page.*/
+/** Displays login page.*/
 app.get('/login', async (req, res) => {
     res.render('Login');
     res.end();
