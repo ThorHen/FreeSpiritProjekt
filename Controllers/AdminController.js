@@ -1,6 +1,6 @@
 /** Documentation written by John Høeg */
 /** Initialising connection to Database Controller. */
-const dbController = require('./dbController')
+const dbController = require('./DBController')
 /** Function to get all user by username. */
 async function getUsernames() {
     const snapshot = await dbController.getUsers()

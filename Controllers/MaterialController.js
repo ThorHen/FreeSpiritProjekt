@@ -1,4 +1,4 @@
-const dbController = require('./dbController');
+const dbController = require('./DBController');
 const userController = require('./UserController');
 
 /**
@@ -59,7 +59,7 @@ async function getAllExercises() {
  * @param {object} trainingForm 
  */
 async function getTrainingExercises(trainingForm) {
-    const trainingFormExercises = await dbController.getTrainingExercises(trainingForm)
+    const trainingFormExercises = await dbController.getTrainingform(trainingForm)
     if (trainingFormExercises.empty) {
         return
     } else {
@@ -115,7 +115,7 @@ async function getExercisesByTag(tag) {
  * @param {object} tag 
  */
 async function getExercisesByTrainingformAndTag(trainingform, tag) {
-    const trainingFormExercises = await getTrainingExercises(trainingform)
+    const trainingFormExercises = await getTrainingform(trainingform)
     const exercisesByTag = await getExercisesByTag(tag)
     if (trainingFormExercises.empty || exercisesByTag.empty) {
         return
