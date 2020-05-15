@@ -115,14 +115,14 @@ async function getExercisesByTag(tag) {
  * @param {object} tag 
  */
 async function getExercisesByTrainingformAndTag(trainingform, tag) {
-    const trainingFormExercises = await getTrainingform(trainingform)
+    let trainingForm = await dbController.getTrainingform(trainingform)
     const exercisesByTag = await getExercisesByTag(tag)
-    if (trainingFormExercises.empty || exercisesByTag.empty) {
+    if (trainingForm.empty || exercisesByTag.empty) {
         return
     } else {
         let result = []
         exercisesByTag.forEach(element => {
-            if (trainingFormExercises.includes(element)) {
+            if (trainingForm.docs[0].data().Exercises.includes(element)) {
                 if (!result.includes(element)) {
                     result.push(element)
                 }
